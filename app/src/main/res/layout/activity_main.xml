@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/startMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -21,14 +21,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/gameTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             app:srcCompat="@drawable/app_title" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/startButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -42,12 +42,13 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/jasonView"
         android:layout_width="347dp"
         android:layout_height="302dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/startMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/jason" />
+        app:srcCompat="@drawable/jason"
+        android:contentDescription="@string/jason_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
