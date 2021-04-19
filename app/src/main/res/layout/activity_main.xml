@@ -4,11 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/space_background"
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="375dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:background="@color/light_grey"
         android:orientation="vertical"
@@ -32,8 +36,18 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="@color/dark_grey"
             android:padding="10dp"
+            android:onClick="onStartPressed"
             android:text="@string/start_button"
             android:textSize="30sp" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="347dp"
+        android:layout_height="302dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/jason" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
