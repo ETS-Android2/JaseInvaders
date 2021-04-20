@@ -53,10 +53,11 @@
         app:srcCompat="@drawable/turret"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/fireView"
         android:layout_width="55dp"
         android:layout_height="55dp"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/fire_button_description"
         android:onClick="onFirePressed"
         app:layout_constraintBottom_toTopOf="@+id/gameMenu"
@@ -86,6 +87,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:progress="100"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" />
 
