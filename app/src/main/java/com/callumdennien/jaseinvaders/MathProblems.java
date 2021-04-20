@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MathProblems {
-    final int difficultyLevel = 100;
-    Random random = new Random();
+    private final int difficultyLevel = 100;
+    private final Random random = new Random();
 
     public ArrayList<Integer> getAddition() {
         int addendsOne = random.nextInt(difficultyLevel);
@@ -34,8 +34,8 @@ public class MathProblems {
     }
 
     public ArrayList<Integer> getMultiplication() {
-        int multiplicand = random.nextInt(difficultyLevel / 2);
-        int multiplier = random.nextInt(multiplicand / 3);
+        int multiplicand = random.nextInt(difficultyLevel / 4);
+        int multiplier = random.nextInt(multiplicand / 2);
         int answerProduct = multiplicand * multiplier;
 
         ArrayList<Integer> problem = new ArrayList<>();
