@@ -78,9 +78,11 @@ public class GameActivity extends AppCompatActivity {
         if (guess.equals(String.valueOf(problemAnswer))) {
             createMathProblem();
             progressBar.setProgress(progressBar.getProgress() - 10);
+            // reset time
 
         } else {
-            Toast.makeText(this, String.valueOf(problemAnswer), Toast.LENGTH_SHORT).show();
+            System.out.println(problemAnswer);
+            // Remove time
         }
     }
 }
