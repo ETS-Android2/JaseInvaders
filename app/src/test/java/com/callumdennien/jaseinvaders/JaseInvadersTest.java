@@ -10,11 +10,6 @@ public class JaseInvadersTest {
     MathProblems mathProblems = new MathProblems();
 
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
-
-    @Test
     public void generate_addition() {
         ArrayList<Integer> problem = mathProblems.getAddition();
         int addendsOne = problem.get(0);
@@ -43,7 +38,4 @@ public class JaseInvadersTest {
 
         assertEquals(answerProduct, (multiplicand * multiplier));
     }
-
-    // Multiplication
-    // Division
 }
