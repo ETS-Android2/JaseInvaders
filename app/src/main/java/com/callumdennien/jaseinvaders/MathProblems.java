@@ -22,7 +22,7 @@ public class MathProblems {
 
     public ArrayList<Integer> getSubtraction() {
         int minuend = random.nextInt(difficultyLevel);
-        int subtrahend = random.nextInt(minuend - 1);
+        int subtrahend = random.nextInt(minuend);
         int answerDifference = minuend - subtrahend;
 
         ArrayList<Integer> problem = new ArrayList<>();
@@ -35,7 +35,7 @@ public class MathProblems {
 
     public ArrayList<Integer> getMultiplication() {
         int multiplicand = random.nextInt(difficultyLevel / 4);
-        int multiplier = random.nextInt(multiplicand / 2);
+        int multiplier = random.nextInt(multiplicand);
         int answerProduct = multiplicand * multiplier;
 
         ArrayList<Integer> problem = new ArrayList<>();

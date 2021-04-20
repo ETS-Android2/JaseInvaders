@@ -1,11 +1,11 @@
 package com.callumdennien.jaseinvaders;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +14,15 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
     private MathProblems mathProblems;
+    private Timer timer;
+    private Handler handler;
+    private boolean isRunning;
     private ProgressBar progressBar;
     private TextView questionView;
     private EditText answerText;
+    private TextView timerView;
     private Integer problemAnswer;
+    private final int speed = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,28 @@ public class GameActivity extends AppCompatActivity {
         mathProblems = new MathProblems();
         progressBar = findViewById(R.id.progressBar);
         questionView = findViewById(R.id.questionView);
+        timerView = findViewById(R.id.timerView);
         answerText = findViewById(R.id.answerText);
+
+        isRunning = false;
+        enableTimer();
+    }
+
+    private void enableTimer() {
+        timer = new Timer();
+        isRunning = true;
+        handler = new Handler();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isRunning) {
+                    timer.tick();
+                    timerView.setText(timer.toString());
+                    handler.postDelayed(this, speed);
+                }
+            }
+        });
     }
 
     @Override
@@ -42,11 +68,14 @@ public class GameActivity extends AppCompatActivity {
         int randomNumber = random.nextInt(3) + 1;
 
         switch (randomNumber) {
-            case 1: updateViewAddition();
+            case 1:
+                updateViewAddition();
                 break;
-            case 2: updateViewSubtraction();
+            case 2:
+                updateViewSubtraction();
                 break;
-            case 3: updateViewMultiplication();
+            case 3:
+                updateViewMultiplication();
                 break;
         }
     }
@@ -76,13 +105,20 @@ public class GameActivity extends AppCompatActivity {
         String guess = answerText.getText().toString();
 
         if (guess.equals(String.valueOf(problemAnswer))) {
-            createMathProblem();
-            progressBar.setProgress(progressBar.getProgress() - 10);
-            // reset time
+            if (!(progressBar.getProgress() == 10)) {
+                progressBar.setProgress(progressBar.getProgress() - 10);
+                answerText.setText("");
+                createMathProblem();
+
+            } else {
+                isRunning = false;
+                // save timer time to leader board/personal best.
+
+            }
 
         } else {
             System.out.println(problemAnswer);
-            // Remove time
+            timer.add(1);
         }
     }
 }
