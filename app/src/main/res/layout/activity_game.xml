@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/space_background"
     tools:context=".GameActivity">
 
     <LinearLayout
@@ -24,6 +25,7 @@
             android:padding="10dp"
             android:text="@string/math_question"
             android:textAlignment="center"
+            android:textColor="@color/white"
             android:textSize="30sp" />
 
         <EditText
@@ -56,6 +58,7 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:contentDescription="@string/fire_button_description"
+        android:onClick="onFirePressed"
         app:layout_constraintBottom_toTopOf="@+id/gameMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
