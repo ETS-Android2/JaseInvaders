@@ -44,26 +44,13 @@
 
     <ImageView
         android:id="@+id/turretView"
-        android:layout_width="108dp"
-        android:layout_height="123dp"
+        android:layout_width="106dp"
+        android:layout_height="113dp"
         android:contentDescription="@string/turret_description"
         app:layout_constraintBottom_toTopOf="@+id/gameMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/turret"
-        tools:ignore="MissingConstraints" />
-
-    <ImageButton
-        android:id="@+id/fireView"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/fire_button_description"
-        android:onClick="onFirePressed"
-        app:layout_constraintBottom_toTopOf="@+id/gameMenu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/fire_button"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
@@ -78,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/invader_health"
+            android:onClick="onFirePressed"
             android:textAlignment="center"
             android:textColor="@color/red"
             android:textSize="30sp" />
@@ -87,10 +75,20 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:progress="100"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:progress="100" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/fire_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fire_button"
+        app:backgroundTint="@color/red"
+        app:layout_constraintBottom_toTopOf="@+id/gameMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

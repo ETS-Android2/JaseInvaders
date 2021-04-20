@@ -53,14 +53,14 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateViewMultiplication() {
         ArrayList<Integer> mathProblem = mathProblems.getMultiplication();
-        String mathFormula = mathProblem.get(0) + " + " + mathProblem.get(1) + " =";
+        String mathFormula = mathProblem.get(0) + " x " + mathProblem.get(1) + " =";
         questionView.setText(mathFormula);
         problemAnswer = mathProblem.get(2);
     }
 
     private void updateViewSubtraction() {
         ArrayList<Integer> mathProblem = mathProblems.getSubtraction();
-        String mathFormula = mathProblem.get(0) + " + " + mathProblem.get(1) + " =";
+        String mathFormula = mathProblem.get(0) + " - " + mathProblem.get(1) + " =";
         questionView.setText(mathFormula);
         problemAnswer = mathProblem.get(2);
     }
@@ -77,8 +77,10 @@ public class GameActivity extends AppCompatActivity {
 
         if (guess.equals(String.valueOf(problemAnswer))) {
             createMathProblem();
+            progressBar.setProgress(progressBar.getProgress() - 10);
+
         } else {
-            Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.valueOf(problemAnswer), Toast.LENGTH_SHORT).show();
         }
     }
 }
