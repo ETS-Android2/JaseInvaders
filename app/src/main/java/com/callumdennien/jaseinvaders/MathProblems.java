@@ -19,4 +19,17 @@ public class MathProblems {
 
         return problem;
     }
+
+    public ArrayList<Integer> getSubtraction() {
+        int minuend = random.nextInt(difficultyLevel);
+        int subtrahend = random.nextInt(minuend - 1);
+        int answerDifference = minuend - subtrahend;
+
+        ArrayList<Integer> problem = new ArrayList<>();
+        problem.add(minuend);
+        problem.add(subtrahend);
+        problem.add(answerDifference);
+
+        return problem;
+    }
 }

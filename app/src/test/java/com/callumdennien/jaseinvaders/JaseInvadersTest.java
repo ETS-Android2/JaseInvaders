@@ -26,7 +26,7 @@ public class JaseInvadersTest {
 
     @Test
     public void generate_subtraction() {
-        ArrayList<Integer> problem = mathProblems.getAddition();
+        ArrayList<Integer> problem = mathProblems.getSubtraction();
         int minuend = problem.get(0);
         int subtrahend = problem.get(1);
         int answerDifference = problem.get(2);
