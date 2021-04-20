@@ -32,4 +32,17 @@ public class MathProblems {
 
         return problem;
     }
+
+    public ArrayList<Integer> getMultiplication() {
+        int multiplicand = random.nextInt(difficultyLevel / 2);
+        int multiplier = random.nextInt(multiplicand / 3);
+        int answerProduct = multiplicand * multiplier;
+
+        ArrayList<Integer> problem = new ArrayList<>();
+        problem.add(multiplicand);
+        problem.add(multiplier);
+        problem.add(answerProduct);
+
+        return problem;
+    }
 }
