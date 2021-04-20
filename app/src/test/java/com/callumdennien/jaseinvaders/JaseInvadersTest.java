@@ -19,8 +19,21 @@ public class JaseInvadersTest {
         ArrayList<Integer> problem = mathProblems.getAddition();
         int addendsOne = problem.get(0);
         int addendsTwo = problem.get(1);
-        int answer = problem.get(2);
+        int answerSum = problem.get(2);
 
-        assertEquals(answer, (addendsOne + addendsTwo));
+        assertEquals(answerSum, (addendsOne + addendsTwo));
     }
+
+    @Test
+    public void generate_subtraction() {
+        ArrayList<Integer> problem = mathProblems.getAddition();
+        int minuend = problem.get(0);
+        int subtrahend = problem.get(1);
+        int answerDifference = problem.get(2);
+
+        assertEquals(answerDifference, (minuend - subtrahend));
+    }
+
+    // Multiplication
+    // Division
 }
