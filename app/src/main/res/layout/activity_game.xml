@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/space_background"
     tools:context=".GameActivity">
 
     <LinearLayout
@@ -47,19 +46,21 @@
         android:layout_height="123dp"
         android:contentDescription="@string/turret_description"
         app:layout_constraintBottom_toTopOf="@+id/gameMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/turret"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="142dp" />
+        tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/fireView"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:contentDescription="@string/fire_button_description"
         app:layout_constraintBottom_toTopOf="@+id/gameMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/fire_button"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="169dp" />
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:layout_width="match_parent"
