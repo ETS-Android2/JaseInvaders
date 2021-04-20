@@ -34,6 +34,16 @@ public class JaseInvadersTest {
         assertEquals(answerDifference, (minuend - subtrahend));
     }
 
+    @Test
+    public void generate_multiplication() {
+        ArrayList<Integer> problem = mathProblems.getMultiplication();
+        int multiplicand = problem.get(0);
+        int multiplier = problem.get(1);
+        int answerProduct = problem.get(2);
+
+        assertEquals(answerProduct, (multiplicand * multiplier));
+    }
+
     // Multiplication
     // Division
 }
