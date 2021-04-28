@@ -34,7 +34,7 @@ public class MathProblems {
     }
 
     public ArrayList<Integer> getMultiplication() {
-        int multiplicand = random.nextInt(difficultyLevel / 4);
+        int multiplicand = random.nextInt(4);
         int multiplier = random.nextInt(multiplicand);
         int answerProduct = multiplicand * multiplier;
 
@@ -42,6 +42,19 @@ public class MathProblems {
         problem.add(multiplicand);
         problem.add(multiplier);
         problem.add(answerProduct);
+
+        return problem;
+    }
+
+    public ArrayList<Integer> getDivision() {
+        int dividend = random.nextInt(4);
+        int divisor = random.nextInt(dividend);
+        int answerQuotient = dividend / divisor;
+
+        ArrayList<Integer> problem = new ArrayList<>();
+        problem.add(dividend);
+        problem.add(divisor);
+        problem.add(answerQuotient);
 
         return problem;
     }
