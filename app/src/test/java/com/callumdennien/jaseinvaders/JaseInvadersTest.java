@@ -49,4 +49,19 @@ public class JaseInvadersTest {
 
         assertEquals(answerQuotient, (dividend / divisor));
     }
+
+    @Test
+    public void get_difficulty() {
+        int difficulty = mathProblems.getDifficulty();
+
+        assertEquals(difficulty, 10);
+    }
+
+    @Test
+    public void set_difficulty() {
+        int newDifficulty = 20;
+        int difficulty = mathProblems.setDifficulty(newDifficulty);
+
+        assertEquals(difficulty, newDifficulty);
+    }
 }
