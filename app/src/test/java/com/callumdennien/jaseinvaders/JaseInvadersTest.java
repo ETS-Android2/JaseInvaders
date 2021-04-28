@@ -38,4 +38,15 @@ public class JaseInvadersTest {
 
         assertEquals(answerProduct, (multiplicand * multiplier));
     }
+
+    @Test
+    public void generate_division() {
+        ArrayList<Integer> problem = mathProblems.getDivision();
+
+        int dividend = problem.get(0);
+        int divisor = problem.get(1);
+        int answerQuotient = problem.get(2);
+
+        assertEquals(answerQuotient, (dividend / divisor));
+    }
 }

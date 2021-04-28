@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MathProblems {
-    private final int difficultyLevel = 100;
+    private final int difficultyLevel = 10;
     private final Random random = new Random();
 
     public ArrayList<Integer> getAddition() {

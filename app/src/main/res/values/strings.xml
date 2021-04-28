@@ -9,4 +9,5 @@
     <string name="jason_description">Jason</string>
     <string name="fire_button">FIRE</string>
     <string name="current_time">0 Seconds</string>
+    <string name="laser">laser</string>
 </resources>
