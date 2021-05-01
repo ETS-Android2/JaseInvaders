@@ -64,4 +64,13 @@ public class JaseInvadersTest {
 
         assertEquals(difficulty, newDifficulty);
     }
+
+    @Test
+    public void reset_timer() {
+        Timer timer = new Timer();
+        timer.add(1);
+        timer.reset();
+
+        assertEquals("0 Seconds", timer.toString());
+    }
 }
