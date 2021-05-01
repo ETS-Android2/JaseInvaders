@@ -65,7 +65,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void createMathProblem() {
         Random random = new Random();
-        int randomNumber = random.nextInt(3) + 1;
+        int randomNumber = random.nextInt(4) + 1;
 
         switch (randomNumber) {
             case 1:
@@ -77,7 +77,17 @@ public class GameActivity extends AppCompatActivity {
             case 3:
                 updateViewMultiplication();
                 break;
+            case 4:
+                updateViewDivision();
+                break;
         }
+    }
+
+    private void updateViewDivision() {
+        ArrayList<Integer> mathProblem = mathProblems.getDivision();
+        String mathFormula = mathProblem.get(0) + " / " + mathProblem.get(1) + " =";
+        questionView.setText(mathFormula);
+        problemAnswer = mathProblem.get(2);
     }
 
     private void updateViewMultiplication() {
@@ -106,19 +116,28 @@ public class GameActivity extends AppCompatActivity {
 
         if (guess.equals(String.valueOf(problemAnswer))) {
             if (!(progressBar.getProgress() == 10)) {
+                // Shoot Turret
+                // Play Shoot Sound
+                // Play Damage Sound
+                // Play Health Sound
+
                 progressBar.setProgress(progressBar.getProgress() - 10);
                 answerText.setText("");
                 createMathProblem();
 
             } else {
                 isRunning = false;
+                progressBar.setProgress(progressBar.getProgress() - 10);
+
                 // save timer time to leader board/personal best.
+                // reset game
 
             }
 
         } else {
             System.out.println(problemAnswer);
             timer.add(1);
+            // Play Timer Sound
         }
     }
 }
