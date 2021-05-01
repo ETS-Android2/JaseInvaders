@@ -20,4 +20,8 @@ public class Timer {
     public void add(int i) {
         seconds += i;
     }
+
+    public void reset() {
+        seconds = 0;
+    }
 }
