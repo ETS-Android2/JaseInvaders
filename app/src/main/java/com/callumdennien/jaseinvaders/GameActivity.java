@@ -14,6 +14,7 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
     private MathProblems mathProblems;
+    private AudioManager audioManager;
     private Timer timer;
     private Handler handler;
     private boolean isRunning;
@@ -30,6 +31,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         mathProblems = new MathProblems();
+        audioManager = new AudioManager(this);
         progressBar = findViewById(R.id.progressBar);
         questionView = findViewById(R.id.questionView);
         timerView = findViewById(R.id.timerView);
@@ -59,7 +61,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         createMathProblem();
     }
 
@@ -120,14 +121,18 @@ public class GameActivity extends AppCompatActivity {
                 // Play Shoot Sound
                 // Play Damage Sound
                 // Play Health Sound
+                audioManager.play(Sound.laser);
 
                 progressBar.setProgress(progressBar.getProgress() - 10);
                 answerText.setText("");
                 createMathProblem();
 
             } else {
+                audioManager.play(Sound.bomb);
+
                 isRunning = false;
                 progressBar.setProgress(progressBar.getProgress() - 10);
+                answerText.setText("");
 
                 // save timer time to leader board/personal best.
                 // reset game
@@ -136,6 +141,7 @@ public class GameActivity extends AppCompatActivity {
         } else {
             System.out.println(problemAnswer);
             timer.add(1);
+            audioManager.play(Sound.incorrect);
             // Play Timer Sound
         }
     }

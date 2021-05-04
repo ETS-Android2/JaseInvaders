@@ -2,6 +2,7 @@ package com.callumdennien.jaseinvaders;
 
 import android.content.Context;
 import android.media.SoundPool;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class AudioManager implements SoundPool.OnLoadCompleteListener {
         this.ready = status == 0;
 
         Sound sound = Sound.values()[loadId++];
+        Log.i("AudioManager", "loaded sound: " + sound);
         soundIds.put(sound, sampleId);
     }
 
