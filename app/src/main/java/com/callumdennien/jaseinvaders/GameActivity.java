@@ -131,7 +131,6 @@ public class GameActivity extends AppCompatActivity {
 
                 // save timer time to leader board/personal best.
                 // reset game
-
             }
 
         } else {

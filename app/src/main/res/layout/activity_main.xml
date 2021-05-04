@@ -22,8 +22,9 @@
 
         <ImageView
             android:id="@+id/gameTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="225dp"
+            android:layout_height="116dp"
+            android:layout_gravity="center"
             android:contentDescription="@string/app_name"
             app:srcCompat="@drawable/app_title" />
 
@@ -38,8 +39,37 @@
             android:onClick="onStartPressed"
             android:padding="10dp"
             android:text="@string/start_button"
-            android:textSize="30sp"
+            android:textSize="20sp"
             app:backgroundTint="@color/dark_grey" />
+
+        <Button
+            android:id="@+id/highScoreButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/dark_grey"
+            android:onClick="onLeaderBoardPressed"
+            android:padding="10dp"
+            android:text="@string/leader_board"
+            android:textSize="20sp"
+            app:backgroundTint="@color/dark_grey" />
+
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/dark_grey"
+            android:onClick="onSettingsPressed"
+            android:padding="10dp"
+            android:text="@string/settings"
+            android:textSize="20sp"
+            app:backgroundTint="@color/dark_grey" />
+
     </LinearLayout>
 
     <ImageView
@@ -50,6 +80,7 @@
         app:layout_constraintBottom_toTopOf="@+id/startMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/jason" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

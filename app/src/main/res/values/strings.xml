@@ -10,4 +10,6 @@
     <string name="fire_button">FIRE</string>
     <string name="current_time">0 Seconds</string>
     <string name="laser">laser</string>
+    <string name="leader_board">Leaderboard</string>
+    <string name="settings">Settings</string>
 </resources>
