@@ -18,6 +18,7 @@ public class GameActivity extends AppCompatActivity {
     private Timer timer;
     private Handler handler;
     private boolean isRunning;
+    private boolean soundTrack;
     private ProgressBar progressBar;
     private TextView questionView;
     private EditText answerText;
@@ -140,9 +141,9 @@ public class GameActivity extends AppCompatActivity {
 
         } else {
             System.out.println(problemAnswer);
-            timer.add(1);
+            timer.tick();
+            timerView.setText(timer.toString());
             audioManager.play(Sound.incorrect);
-            // Play Timer Sound
         }
     }
 }

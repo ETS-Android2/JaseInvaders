@@ -15,9 +15,8 @@ public class AudioManager implements SoundPool.OnLoadCompleteListener {
 
     AudioManager(Context context) {
         soundIds = new HashMap<>();
-        pool = new SoundPool(4, android.media.AudioManager.STREAM_MUSIC, 0);
+        pool = new SoundPool(3, android.media.AudioManager.STREAM_MUSIC, 0);
         pool.setOnLoadCompleteListener(this);
-        pool.load(context, R.raw.soundtrack, 0);
         pool.load(context, R.raw.incorrect, 0);
         pool.load(context, R.raw.laser, 0);
         pool.load(context, R.raw.bomb, 0);
