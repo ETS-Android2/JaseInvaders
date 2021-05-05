@@ -165,7 +165,7 @@ public class GameActivity extends AppCompatActivity {
                 progressBar.setProgress(progressBar.getProgress() - 10);
                 answerText.setText("");
 
-                // save timer time to leader board/personal best.
+                dataSource.edit().putString("score", timer.toString()).apply();
                 // reset game
             }
 

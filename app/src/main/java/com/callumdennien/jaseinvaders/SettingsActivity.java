@@ -31,12 +31,25 @@ public class SettingsActivity extends AppCompatActivity {
         soundButton = findViewById(R.id.sound);
         shareButton = findViewById(R.id.share);
 
-        soundToggle = true;
-        currentDifficulty = "Difficulty: Easy";
-
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        soundToggle = dataSource.getBoolean("sound", true);
+        currentDifficulty = dataSource.getString("difficulty", "Difficulty: Easy");
+
+        difficultyButton.setText(currentDifficulty);
+
+        if (soundToggle) {
+            soundButton.setText(R.string.sound_on);
+        } else if (!(soundToggle)) {
+            soundButton.setText(R.string.sound_off);
+        }
     }
 
     @Override
