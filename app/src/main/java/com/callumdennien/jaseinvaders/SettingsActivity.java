@@ -15,6 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Button soundButton;
     private Button shareButton;
     private String currentDifficulty;
+    private boolean soundToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,19 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onSoundClicked(View view) {
+        String soundMode = soundButton.getText().toString();
+
+        switch (soundMode) {
+            case "Sound: on":
+                soundToggle = false;
+                soundMode = "Sound: off";
+                soundButton.setText(soundMode);
+                return;
+            case "Sound: off":
+                soundToggle = true;
+                soundMode = "Sound: on";
+                soundButton.setText(soundMode);
+        }
     }
 
     public void onShareClicked(View view) {

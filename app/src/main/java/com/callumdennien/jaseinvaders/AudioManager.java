@@ -12,6 +12,7 @@ public class AudioManager implements SoundPool.OnLoadCompleteListener {
     private final SoundPool pool;
     private int loadId;
     private boolean ready;
+    private boolean online;
 
     AudioManager(Context context) {
         soundIds = new HashMap<>();
@@ -35,9 +36,15 @@ public class AudioManager implements SoundPool.OnLoadCompleteListener {
         return ready;
     }
 
+    public void toggle(boolean toggle) {
+        online = toggle;
+    }
+
     void play(Sound sound) {
-        Integer id = soundIds.get(sound);
-        assert id != null;
-        pool.play(id, 1, 1, 1, 0, 1);
+        if (online) {
+            Integer id = soundIds.get(sound);
+            assert id != null;
+            pool.play(id, 1, 1, 1, 0, 1);
+        }
     }
 }
