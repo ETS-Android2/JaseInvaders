@@ -3,9 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/settings_item"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:onClick="onSettingsPressed"
         android:title="@string/settings"
+        app:showAsAction="ifRoom" />
 
-        />
+    <item
+        android:id="@+id/leader_board_item"
+        android:icon="@drawable/ic_baseline_leader_board_24"
+        android:onClick="onLeaderBoardPressed"
+        android:title="@string/leader_board"
+        app:showAsAction="ifRoom" />
 
 
 </menu>
