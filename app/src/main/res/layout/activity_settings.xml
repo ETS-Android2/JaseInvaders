@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@color/dark_grey"
+            android:onClick="onDifficultyClicked"
             android:text="@string/difficulty_easy"
             android:textColor="@color/white"
             android:textSize="30sp" />
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@color/dark_grey"
+            android:onClick="onSoundClicked"
             android:text="@string/sound_on"
             android:textColor="@color/white"
             android:textSize="30sp" />
@@ -54,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:onClick="onShareClicked"
             android:background="@color/dark_grey"
             android:text="@string/share"
             android:textColor="@color/white"

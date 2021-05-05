@@ -18,7 +18,6 @@ public class GameActivity extends AppCompatActivity {
     private Timer timer;
     private Handler handler;
     private boolean isRunning;
-    private boolean soundTrack;
     private ProgressBar progressBar;
     private TextView questionView;
     private EditText answerText;
