@@ -1,11 +1,13 @@
 package com.callumdennien.jaseinvaders;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,9 +29,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onSettingsPressed(MenuItem item) {
-    }
-
-    public void onLeaderBoardPressed(MenuItem item) {
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings_item:
+                return true;
+            case R.id.leader_board_item:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
