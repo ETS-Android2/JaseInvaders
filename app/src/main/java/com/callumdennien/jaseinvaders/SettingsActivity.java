@@ -1,6 +1,9 @@
 package com.callumdennien.jaseinvaders;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +14,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
+    private SharedPreferences dataSource;
     private Button difficultyButton;
     private Button soundButton;
     private Button shareButton;
@@ -22,9 +26,13 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        dataSource = getSharedPreferences("settings", Context.MODE_PRIVATE);
         difficultyButton = findViewById(R.id.difficulty);
         soundButton = findViewById(R.id.sound);
         shareButton = findViewById(R.id.share);
+
+        soundToggle = true;
+        currentDifficulty = "Difficulty: Easy";
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -40,9 +48,12 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            dataSource.edit().clear().apply();
+            dataSource.edit().putString("difficulty", currentDifficulty).apply();
+            dataSource.edit().putBoolean("sound", soundToggle).apply();
             finish();
-            // Save to DataStream
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -81,5 +92,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onShareClicked(View view) {
+        // Share results on twitter.
     }
 }

@@ -1,18 +1,23 @@
 package com.callumdennien.jaseinvaders;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
+    private SharedPreferences dataSource;
     private MathProblems mathProblems;
     private AudioManager audioManager;
     private Timer timer;
@@ -30,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        dataSource = getSharedPreferences("settings", Context.MODE_PRIVATE);
         mathProblems = new MathProblems();
         audioManager = new AudioManager(this);
         progressBar = findViewById(R.id.progressBar);
@@ -39,6 +45,10 @@ public class GameActivity extends AppCompatActivity {
 
         isRunning = false;
         enableTimer();
+
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void enableTimer() {
@@ -61,7 +71,29 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        boolean sound = dataSource.getBoolean("sound", true);
+        String difficulty = dataSource.getString("difficulty", "Difficulty: Easy");
+
+        audioManager.toggle(sound);
+
+        switch (difficulty) {
+            case "Difficulty: Easy":
+                mathProblems.setDifficulty(10);
+                return;
+            case "Difficulty: Normal":
+                mathProblems.setDifficulty(20);
+                return;
+            case "Difficulty: Hard":
+                mathProblems.setDifficulty(30);
+        }
+
         createMathProblem();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Save Settings
     }
 
     private void createMathProblem() {
