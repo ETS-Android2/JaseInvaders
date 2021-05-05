@@ -119,7 +119,6 @@ public class GameActivity extends AppCompatActivity {
         if (guess.equals(String.valueOf(problemAnswer))) {
             if (!(progressBar.getProgress() == 10)) {
                 // Shoot Turret
-                // Play Shoot Sound
                 // Play Damage Sound
                 // Play Health Sound
                 audioManager.play(Sound.laser);
