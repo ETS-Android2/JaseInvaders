@@ -7,6 +7,16 @@
     android:background="@color/blue"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/jasonView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/jason_description"
+        app:layout_constraintBottom_toTopOf="@+id/startMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/jason" />
+
     <LinearLayout
         android:id="@+id/startMenu"
         android:layout_width="match_parent"
@@ -44,15 +54,6 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/jasonView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/jason_description"
-        app:layout_constraintBottom_toTopOf="@+id/startMenu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/jason" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
