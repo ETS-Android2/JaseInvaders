@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView timerView;
     private Integer problemAnswer;
     private final int speed = 1000;
+    private int personalBest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class GameActivity extends AppCompatActivity {
         super.onStart();
         boolean sound = dataSource.getBoolean("sound", true);
         String difficulty = dataSource.getString("difficulty", "Difficulty: Easy");
+        personalBest = dataSource.getInt("score", 999);
 
         audioManager.toggle(sound);
 
@@ -165,7 +167,14 @@ public class GameActivity extends AppCompatActivity {
                 progressBar.setProgress(progressBar.getProgress() - 10);
                 answerText.setText("");
 
-                dataSource.edit().putString("score", timer.toString()).apply();
+                String score = timer.toString();
+                score = score.replace(" Seconds", "");
+
+                if (Integer.parseInt(score) > personalBest) {
+                    personalBest = Integer.parseInt(score);
+                }
+
+                dataSource.edit().putInt("score", personalBest).apply();
                 // reset game
             }
 

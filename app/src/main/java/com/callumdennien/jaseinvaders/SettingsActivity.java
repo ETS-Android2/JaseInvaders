@@ -3,7 +3,6 @@ package com.callumdennien.jaseinvaders;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,15 +13,16 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences dataSource;
     private Button difficultyButton;
     private Button soundButton;
-    private Button shareButton;
     private String currentDifficulty;
     private boolean soundToggle;
+    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,6 @@ public class SettingsActivity extends AppCompatActivity {
         dataSource = getSharedPreferences("settings", Context.MODE_PRIVATE);
         difficultyButton = findViewById(R.id.difficulty);
         soundButton = findViewById(R.id.sound);
-        shareButton = findViewById(R.id.share);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -45,12 +44,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         soundToggle = dataSource.getBoolean("sound", true);
         currentDifficulty = dataSource.getString("difficulty", "Difficulty: Easy");
+        score = dataSource.getInt("score", 999);
 
         difficultyButton.setText(currentDifficulty);
 
         if (soundToggle) {
             soundButton.setText(R.string.sound_on);
-        } else if (!(soundToggle)) {
+        } else {
             soundButton.setText(R.string.sound_off);
         }
     }
@@ -107,8 +107,8 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public void onShareClicked(View view) {
-        // Share results on twitter.
+    public void onShareClicked(View view) throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
+        twitter.updateStatus("I just beat the game in " + score + " Seconds. #BeatThat");
     }
 }
