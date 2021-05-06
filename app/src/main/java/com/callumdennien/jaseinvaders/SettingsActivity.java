@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences dataSource;
     private Button difficultyButton;
@@ -106,5 +109,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onShareClicked(View view) {
         // Share results on twitter.
+        Twitter twitter = TwitterFactory.getSingleton();
     }
 }
