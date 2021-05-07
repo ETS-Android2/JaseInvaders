@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onStartPressed(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
+        Intent gameIntent = new Intent(this, GameActivity.class);
+        startActivity(gameIntent);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -39,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings_item:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
             case R.id.leader_board_item:
+                Intent leaderBoardIntent = new Intent(this, LeaderBoardActivity.class);
+                startActivity(leaderBoardIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

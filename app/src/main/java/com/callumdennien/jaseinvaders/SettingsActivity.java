@@ -3,9 +3,12 @@ package com.callumdennien.jaseinvaders;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,9 +22,9 @@ import twitter4j.TwitterFactory;
 
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences dataSource;
+    private EditText nameText;
     private Button difficultyButton;
     private Button soundButton;
-    private String currentDifficulty;
     private boolean soundToggle;
     private int score;
 
@@ -31,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         dataSource = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        nameText = findViewById(R.id.name_text);
         difficultyButton = findViewById(R.id.difficulty);
         soundButton = findViewById(R.id.sound);
 
@@ -43,11 +47,11 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        nameText.setText(dataSource.getString("name", "Anonymous"));
         soundToggle = dataSource.getBoolean("sound", true);
-        currentDifficulty = dataSource.getString("difficulty", "Difficulty: Easy");
+        difficultyButton.setText(dataSource.getString("difficulty", "Difficulty: Easy"));
         score = dataSource.getInt("score", 999);
 
-        difficultyButton.setText(currentDifficulty);
 
         if (soundToggle) {
             soundButton.setText(R.string.sound_on);
@@ -58,7 +62,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "Cancelled Changes", Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, "Cancelled Changes", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
         super.onBackPressed();
     }
 
@@ -66,7 +72,8 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             dataSource.edit().clear().apply();
-            dataSource.edit().putString("difficulty", currentDifficulty).apply();
+            dataSource.edit().putString("name", nameText.getText().toString()).apply();
+            dataSource.edit().putString("difficulty", difficultyButton.getText().toString()).apply();
             dataSource.edit().putBoolean("sound", soundToggle).apply();
             finish();
         }
@@ -75,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onDifficultyClicked(View view) {
-        currentDifficulty = difficultyButton.getText().toString();
+        String currentDifficulty = difficultyButton.getText().toString();
 
         switch (currentDifficulty) {
             case "Difficulty: Easy":
@@ -112,6 +119,5 @@ public class SettingsActivity extends AppCompatActivity {
         Twitter twitter = TwitterFactory.getSingleton();
         Status status = twitter.updateStatus("I stopped an invasion in " + score + " Seconds. #JaseInvaders");
         Toast.makeText(this, "Shared Personal Score", Toast.LENGTH_SHORT).show();
-        System.out.println(status);
     }
 }

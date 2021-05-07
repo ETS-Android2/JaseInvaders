@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Menu;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -150,9 +150,7 @@ public class GameActivity extends AppCompatActivity {
 
         if (guess.equals(String.valueOf(problemAnswer))) {
             if (!(progressBar.getProgress() == 10)) {
-                // Shoot Turret
-                // Play Damage Sound
-                // Play Health Sound
+                // TODO: DRAW IN INVADER
                 audioManager.play(Sound.laser);
 
                 progressBar.setProgress(progressBar.getProgress() - 10);
@@ -166,15 +164,17 @@ public class GameActivity extends AppCompatActivity {
                 progressBar.setProgress(progressBar.getProgress() - 10);
                 answerText.setText("");
 
-                String score = timer.toString();
-                score = score.replace(" Seconds", "");
+                int score = Integer.parseInt(timer.toString().replace(" Seconds", ""));
 
-                if (Integer.parseInt(score) > personalBest) {
-                    personalBest = Integer.parseInt(score);
+                if (score > personalBest) {
+                    personalBest = score;
                 }
 
                 dataSource.edit().putInt("score", personalBest).apply();
-                // reset game
+                Toast toast = Toast.makeText(this, "Beat Invasion In " + score + " Seconds", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                finish();
             }
 
         } else {
