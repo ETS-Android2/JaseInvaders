@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -109,6 +110,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onShareClicked(View view) throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
-        twitter.updateStatus("I just beat the game in " + score + " Seconds. #BeatThat");
+        Status status = twitter.updateStatus("I stopped an invasion in " + score + " Seconds. #JaseInvaders");
+        Toast.makeText(this, "Shared Personal Score", Toast.LENGTH_SHORT).show();
+        System.out.println(status);
     }
 }

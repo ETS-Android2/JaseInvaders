@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -81,10 +82,8 @@ public class GameActivity extends AppCompatActivity {
         switch (difficulty) {
             case "Difficulty: Easy":
                 mathProblems.setDifficulty(10);
-                return;
             case "Difficulty: Normal":
                 mathProblems.setDifficulty(20);
-                return;
             case "Difficulty: Hard":
                 mathProblems.setDifficulty(30);
         }
@@ -95,7 +94,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        // Save Settings
+        // Save Settings/Time
     }
 
     private void createMathProblem() {
