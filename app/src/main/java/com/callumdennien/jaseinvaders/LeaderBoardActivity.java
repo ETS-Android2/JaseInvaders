@@ -1,15 +1,16 @@
 package com.callumdennien.jaseinvaders;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class LeaderBoardActivity extends AppCompatActivity {
     private SQLiteOpenHelper database;
-    private ContentValues highScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +18,9 @@ public class LeaderBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leader_board);
 
         database = new SQLiteOpenHelper(this);
-        database.getReadableDatabase();
+//        database.insertScore(database.getWritableDatabase(), "Callum", 24);
 
-
+        HashMap<String, String> scores = database.queryScores();
     }
 
     @Override
