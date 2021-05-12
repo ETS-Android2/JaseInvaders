@@ -119,11 +119,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         float z = event.values[2];
 
         float gravityEarth = SensorManager.GRAVITY_EARTH;
-        float accelerometer = (float) Math.sqrt((double) (x * x + y * y + z * z));
+        float accelerometer = (float) Math.sqrt(x * x + y * y + z * z);
         float movement = accelerometer - gravityEarth;
         float phoneShake = 10f * 0.9f + movement;
 
         if (phoneShake > 10) {
+            gamePreferences.setAnsweredQuestion(false);
+            answerText.setText("");
             createMathProblem();
             questionView.setText(gamePreferences.getCurrentQuestion());
         }
@@ -182,7 +184,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         String guess = answerText.getText().toString();
 
         if (!guess.equals("") && Integer.parseInt(guess) == gamePreferences.getCurrentAnswer()) {
-            damageUFO();
+            if (!gamePreferences.getAnsweredQuestion()) {
+                damageUFO();
+            }
 
         } else {
             timer.tick();
@@ -224,12 +228,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void damageUFO() {
+        gamePreferences.setAnsweredQuestion(true);
+
         if (audioManager.isReady()) {
             if (progressBar.getProgress() > 10) {
                 audioManager.play(Sound.laser);
                 audioManager.play(Sound.grunt);
                 progressBar.setProgress(progressBar.getProgress() - 10);
-                answerText.setText("");
 
             } else {
                 isRunning = false;

@@ -6,6 +6,7 @@ public class GamePreferences {
     private Difficulty difficulty;
     private boolean sound_effects;
     private boolean music;
+    private boolean answered_question;
     private int personal_best;
     private int current_score;
     private String current_question;
@@ -16,6 +17,7 @@ public class GamePreferences {
         difficulty = Difficulty.EASY;
         sound_effects = true;
         music = true;
+        answered_question = false;
         personal_best = 999;
         current_score = 0;
         current_question = "1 / 1 =";
@@ -60,6 +62,14 @@ public class GamePreferences {
 
     public void setMusic(boolean music) {
         this.music = music;
+    }
+
+    public boolean getAnsweredQuestion() {
+        return answered_question;
+    }
+
+    public void setAnsweredQuestion(boolean answered_question) {
+        this.answered_question = answered_question;
     }
 
     public int getPersonalBest() {
