@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bumptech.glide.Glide;
-
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -30,7 +30,6 @@ public class GameActivity extends AppCompatActivity {
     private TextView questionView;
     private EditText answerText;
     private TextView timerView;
-    private ImageView ufoView;
     private Integer problemAnswer;
     private boolean isRunning;
     private final int speed = 1000;
@@ -47,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
         questionView = findViewById(R.id.questionView);
         timerView = findViewById(R.id.timerView);
         answerText = findViewById(R.id.answerText);
-        ufoView = findViewById(R.id.ufoView);
+        ImageView ufoView = findViewById(R.id.ufoView);
 
         isRunning = false;
         enableTimer();
@@ -58,8 +57,8 @@ public class GameActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    private void playMusic() {
-        if (gamePreferences.getMusic()) {
+    private void playMusic(boolean playing) {
+        if (playing) {
             mediaPlayer = MediaPlayer.create(this, R.raw.game_background);
             mediaPlayer.setLooping(true);
             mediaPlayer.start();
@@ -87,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         audioManager.toggle(gamePreferences.getSoundEffects());
-        playMusic();
+        playMusic(gamePreferences.getMusic());
 
         switch (gamePreferences.getDifficulty()) {
             case "EASY MODE":
@@ -107,14 +106,18 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mediaPlayer.stop();
+        if (gamePreferences.getMusic()) {
+            mediaPlayer.stop();
+        }
         // Save Settings/Time
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.stop();
+        if (gamePreferences.getMusic()) {
+            mediaPlayer.stop();
+        }
     }
 
     private void createMathProblem() {
@@ -170,15 +173,18 @@ public class GameActivity extends AppCompatActivity {
 
         if (guess.equals(String.valueOf(problemAnswer))) {
             if (!(progressBar.getProgress() == 10)) {
-                // TODO: DRAW IN INVADER
-                audioManager.play(Sound.laser);
+                if (audioManager.isReady()) {
+                    audioManager.play(Sound.laser);
+                }
 
                 progressBar.setProgress(progressBar.getProgress() - 10);
                 answerText.setText("");
                 createMathProblem();
 
             } else {
-                audioManager.play(Sound.bomb);
+                if (audioManager.isReady()) {
+                    audioManager.play(Sound.bomb);
+                }
 
                 isRunning = false;
                 progressBar.setProgress(progressBar.getProgress() - 10);
@@ -200,7 +206,10 @@ public class GameActivity extends AppCompatActivity {
             System.out.println(problemAnswer);
             timer.tick();
             timerView.setText(timer.toString());
-            audioManager.play(Sound.incorrect);
+
+            if (audioManager.isReady()) {
+                audioManager.play(Sound.incorrect);
+            }
         }
     }
 }

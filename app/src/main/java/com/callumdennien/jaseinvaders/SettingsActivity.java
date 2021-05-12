@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -86,15 +85,15 @@ public class SettingsActivity extends AppCompatActivity {
     public void onDifficultyClicked(View view) {
         switch (difficultyButton.getText().toString()) {
             case "EASY MODE":
-                gamePreferences.setDifficulty(Diffuclty.MEDIUM);
+                gamePreferences.setDifficulty(Difficulty.MEDIUM);
                 difficultyButton.setText(gamePreferences.getDifficulty());
                 break;
             case "MEDIUM MODE":
-                gamePreferences.setDifficulty(Diffuclty.HARD);
+                gamePreferences.setDifficulty(Difficulty.HARD);
                 difficultyButton.setText(gamePreferences.getDifficulty());
                 break;
             case "HARD MODE":
-                gamePreferences.setDifficulty(Diffuclty.EASY);
+                gamePreferences.setDifficulty(Difficulty.EASY);
                 difficultyButton.setText(gamePreferences.getDifficulty());
                 break;
         }
@@ -128,7 +127,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onShareClicked(View view) throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
-        Status status = twitter.updateStatus("I stopped an invasion in " + gamePreferences.getPersonalBest() + " Seconds. #JaseInvaders");
+        twitter.updateStatus("I stopped an invasion in " + gamePreferences.getPersonalBest() + " Seconds. #JaseInvaders");
         Toast.makeText(this, "Shared Personal Score", Toast.LENGTH_SHORT).show();
     }
 

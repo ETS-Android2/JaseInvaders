@@ -6,14 +6,14 @@ public class GamePreferences {
     private boolean sound_effects;
     private boolean music;
     private int personal_best;
-    private Diffuclty difficulty;
+    private Difficulty difficulty;
 
     public GamePreferences() {
         player_name = "Anonymous";
         sound_effects = true;
         music = true;
         personal_best = 999;
-        difficulty = Diffuclty.EASY;
+        difficulty = Difficulty.EASY;
     }
 
     public static GamePreferences getInstance() {
@@ -60,7 +60,7 @@ public class GamePreferences {
         return difficulty.label;
     }
 
-    public void setDifficulty(Diffuclty difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 }

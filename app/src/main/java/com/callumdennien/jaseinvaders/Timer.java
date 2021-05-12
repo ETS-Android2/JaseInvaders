@@ -5,7 +5,9 @@ import androidx.annotation.NonNull;
 public class Timer {
     private int seconds;
 
-    Timer() {seconds = 0;}
+    Timer() {
+        seconds = 0;
+    }
 
     void tick() {
         ++seconds;

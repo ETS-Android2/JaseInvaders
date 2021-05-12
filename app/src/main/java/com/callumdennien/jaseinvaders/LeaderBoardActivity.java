@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LeaderBoardActivity extends AppCompatActivity {
