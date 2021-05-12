@@ -242,7 +242,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 progressBar.setProgress(progressBar.getProgress() - 10);
 
                 gamePreferences.setPersonalBest(Math.max(timer.getScore(), gamePreferences.getPersonalBest()));
-                // TODO: Create Database input
+                SQLiteOpenHelper database = new SQLiteOpenHelper(this);
+                database.insertScore(database.getWritableDatabase(), gamePreferences.getPlayerName(), timer.getScore());
+                database.close();
 
                 createToast("Beat Invasion In " + timer.toString());
                 finish();

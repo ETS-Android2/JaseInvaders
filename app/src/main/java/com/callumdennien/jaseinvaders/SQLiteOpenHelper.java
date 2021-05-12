@@ -32,14 +32,14 @@ public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.close();
     }
 
-    public HashMap<String, String> queryScores() {
+    public HashMap<String, Integer> queryScores() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT NAME, SCORE FROM SCORES", null);
+        Cursor cursor = db.rawQuery("SELECT NAME, SCORE FROM SCORES ORDER BY SCORE", null);
 
-        HashMap<String, String> scores = new HashMap<>();
+        HashMap<String, Integer> scores = new HashMap<>();
         if (cursor.moveToFirst()) {
             do {
-                scores.put(cursor.getString(1), cursor.getString(0));
+                scores.put(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
             } while (cursor.moveToNext());
         }
 
