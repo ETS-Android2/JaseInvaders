@@ -168,13 +168,14 @@ public class GameActivity extends AppCompatActivity {
         problemAnswer = mathProblem.get(2);
     }
 
-    public void onFirePressed(View view) {
+    public void onFirePressed(View view) throws InterruptedException {
         String guess = answerText.getText().toString();
 
         if (guess.equals(String.valueOf(problemAnswer))) {
             if (!(progressBar.getProgress() == 10)) {
                 if (audioManager.isReady()) {
                     audioManager.play(Sound.laser);
+                    audioManager.play(Sound.grunt);
                 }
 
                 progressBar.setProgress(progressBar.getProgress() - 10);

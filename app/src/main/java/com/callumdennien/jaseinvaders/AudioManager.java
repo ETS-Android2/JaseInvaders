@@ -20,6 +20,7 @@ public class AudioManager implements SoundPool.OnLoadCompleteListener {
         pool.setOnLoadCompleteListener(this);
         pool.load(context, R.raw.incorrect, 0);
         pool.load(context, R.raw.laser, 0);
+        pool.load(context, R.raw.grunt, 0);
         pool.load(context, R.raw.bomb, 0);
     }
 
