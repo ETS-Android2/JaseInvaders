@@ -4,6 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     tools:context=".LeaderBoardActivity">
+
+    <LinearLayout
+        android:id="@+id/high_scores_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/light_grey"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:text="@string/high_scores"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="50sp" />
+
+        <ListView
+            android:id="@+id/score_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:background="@color/dark_grey" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
