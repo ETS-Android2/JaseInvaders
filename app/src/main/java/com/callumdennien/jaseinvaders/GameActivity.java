@@ -1,8 +1,14 @@
 package com.callumdennien.jaseinvaders;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -19,8 +25,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements SensorEventListener {
     private GamePreferences gamePreferences;
+    private SensorManager sensorManager;
+    private Sensor sensor;
     private MathProblems mathProblems;
     private AudioManager audioManager;
     private MediaPlayer mediaPlayer;
@@ -32,7 +40,6 @@ public class GameActivity extends AppCompatActivity {
     private EditText answerText;
     private ImageView ufoView;
     private boolean isRunning;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,10 @@ public class GameActivity extends AppCompatActivity {
         timerView = findViewById(R.id.timerView);
         answerText = findViewById(R.id.answerText);
         ufoView = findViewById(R.id.ufoView);
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         isRunning = false;
         enableTimer();
@@ -80,11 +91,13 @@ public class GameActivity extends AppCompatActivity {
         }
 
         questionView.setText(gamePreferences.getCurrentQuestion());
+        createToast("Shake Screen to Change/Reset Question");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        sensorManager.unregisterListener(this);
         gamePreferences.setCurrentScore(timer.getScore());
 
         if (gamePreferences.getMusic()) {
@@ -95,7 +108,30 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         timer.add(gamePreferences.getCurrentScore());
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+
+        float gravityEarth = SensorManager.GRAVITY_EARTH;
+        float accelerometer = (float) Math.sqrt((double) (x * x + y * y + z * z));
+        float movement = accelerometer - gravityEarth;
+        float phoneShake = 10f * 0.9f + movement;
+
+        if (phoneShake > 10) {
+            createMathProblem();
+            questionView.setText(gamePreferences.getCurrentQuestion());
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        Log.i(sensor.getName(), String.valueOf(accuracy));
     }
 
     private void createMathProblem() {
@@ -147,6 +183,7 @@ public class GameActivity extends AppCompatActivity {
 
         if (!guess.equals("") && Integer.parseInt(guess) == gamePreferences.getCurrentAnswer()) {
             damageUFO();
+
         } else {
             timer.tick();
             timerView.setText(timer.toString());
@@ -202,11 +239,15 @@ public class GameActivity extends AppCompatActivity {
                 gamePreferences.setPersonalBest(Math.max(timer.getScore(), gamePreferences.getPersonalBest()));
                 // TODO: Create Database input
 
-                Toast toast = Toast.makeText(this, "Beat Invasion In " + timer.toString(), Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+                createToast("Beat Invasion In " + timer.toString());
                 finish();
             }
         }
+    }
+
+    private void createToast(String message) {
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }
