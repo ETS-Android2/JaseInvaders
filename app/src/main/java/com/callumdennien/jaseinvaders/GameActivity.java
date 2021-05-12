@@ -6,12 +6,15 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,19 +25,20 @@ public class GameActivity extends AppCompatActivity {
     private AudioManager audioManager;
     private MediaPlayer mediaPlayer;
     private Timer timer;
-    private TextView timerView;
     private Handler handler;
-    private boolean isRunning;
+    private TextView timerView;
     private ProgressBar progressBar;
     private TextView questionView;
     private EditText answerText;
-//    private int currentAnswer;
+    private ImageView ufoView;
+    private boolean isRunning;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-//
+
         gamePreferences = GamePreferences.getInstance();
         mathProblems = new MathProblems();
         audioManager = new AudioManager(this);
@@ -42,12 +46,12 @@ public class GameActivity extends AppCompatActivity {
         questionView = findViewById(R.id.questionView);
         timerView = findViewById(R.id.timerView);
         answerText = findViewById(R.id.answerText);
-//        ImageView ufoView = findViewById(R.id.ufoView);
-//
+        ufoView = findViewById(R.id.ufoView);
+
         isRunning = false;
         enableTimer();
-//        Glide.with(this).load(R.drawable.ufo_boss).into(ufoView);
-//
+        drawUFO();
+
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -168,6 +172,10 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void drawUFO() {
+        Glide.with(this).load(R.drawable.ufo_boss).into(ufoView);
     }
 
     private void playMusic(boolean playing) {
