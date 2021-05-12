@@ -5,12 +5,16 @@ public class GamePreferences {
     private String player_name;
     private boolean sound_effects;
     private int personal_best;
+    private Diffuclty difficulty;
 
     public GamePreferences() {
+        player_name = "Anonymous";
         sound_effects = true;
+        personal_best = 999;
+        difficulty = Diffuclty.EASY;
     }
 
-    public static GamePreferences getInstance(){
+    public static GamePreferences getInstance() {
         if (instance == null) {
             instance = new GamePreferences();
         }
@@ -42,5 +46,11 @@ public class GamePreferences {
         this.personal_best = personal_best;
     }
 
+    public String getDifficulty() {
+        return difficulty.label;
+    }
 
+    public void setDifficulty(Diffuclty difficulty) {
+        this.difficulty = difficulty;
+    }
 }
