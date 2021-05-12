@@ -69,14 +69,15 @@ public class SettingsActivity extends AppCompatActivity {
             case "Difficulty: Easy":
                 gamePreferences.setDifficulty(Diffuclty.MEDIUM);
                 difficultyButton.setText(gamePreferences.getDifficulty());
-                return;
+                break;
             case "Difficulty: Normal":
                 gamePreferences.setDifficulty(Diffuclty.HARD);
                 difficultyButton.setText(gamePreferences.getDifficulty());
-                return;
+                break;
             case "Difficulty: Hard":
                 gamePreferences.setDifficulty(Diffuclty.EASY);
                 difficultyButton.setText(gamePreferences.getDifficulty());
+                break;
         }
     }
 
@@ -85,10 +86,11 @@ public class SettingsActivity extends AppCompatActivity {
             case "Sound: on":
                 gamePreferences.setSoundEffects(false);
                 soundButton.setText(String.valueOf(gamePreferences.getSoundEffects()));
-                return;
+                break;
             case "Sound: off":
                 gamePreferences.setSoundEffects(true);
                 soundButton.setText(String.valueOf(gamePreferences.getSoundEffects()));
+                break;
         }
     }
 

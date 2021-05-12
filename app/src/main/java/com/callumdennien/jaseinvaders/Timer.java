@@ -24,4 +24,8 @@ public class Timer {
     public void reset() {
         seconds = 0;
     }
+
+    public int getScore() {
+        return seconds;
+    }
 }

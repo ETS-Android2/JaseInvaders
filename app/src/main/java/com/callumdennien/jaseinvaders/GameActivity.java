@@ -18,26 +18,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
-    private SharedPreferences dataSource;
+    private GamePreferences gamePreferences;
     private MathProblems mathProblems;
     private AudioManager audioManager;
     private Timer timer;
     private Handler handler;
-    private boolean isRunning;
     private ProgressBar progressBar;
     private TextView questionView;
     private EditText answerText;
     private TextView timerView;
     private Integer problemAnswer;
+    private boolean isRunning;
     private final int speed = 1000;
-    private int personalBest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        dataSource = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        gamePreferences = GamePreferences.getInstance();
         mathProblems = new MathProblems();
         audioManager = new AudioManager(this);
         progressBar = findViewById(R.id.progressBar);
@@ -55,8 +54,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void enableTimer() {
         timer = new Timer();
-        isRunning = true;
         handler = new Handler();
+        isRunning = true;
 
         handler.post(new Runnable() {
             @Override
@@ -73,19 +72,18 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        boolean sound = dataSource.getBoolean("sound", true);
-        String difficulty = dataSource.getString("difficulty", "Difficulty: Easy");
-        personalBest = dataSource.getInt("score", 999);
+        audioManager.toggle(gamePreferences.getSoundEffects());
 
-        audioManager.toggle(sound);
-
-        switch (difficulty) {
-            case "Difficulty: Easy":
+        switch (gamePreferences.getDifficulty()) {
+            case "EASY MODE":
                 mathProblems.setDifficulty(10);
-            case "Difficulty: Normal":
+                break;
+            case "MEDIUM MODE":
                 mathProblems.setDifficulty(20);
-            case "Difficulty: Hard":
+                break;
+            case "HARD MODE":
                 mathProblems.setDifficulty(30);
+                break;
         }
 
         createMathProblem();
@@ -164,14 +162,13 @@ public class GameActivity extends AppCompatActivity {
                 progressBar.setProgress(progressBar.getProgress() - 10);
                 answerText.setText("");
 
-                int score = Integer.parseInt(timer.toString().replace(" Seconds", ""));
-
-                if (score > personalBest) {
-                    personalBest = score;
+                if (timer.getScore() > gamePreferences.getPersonalBest()) {
+                    gamePreferences.setPersonalBest(timer.getScore());
                 }
 
-                dataSource.edit().putInt("score", personalBest).apply();
-                Toast toast = Toast.makeText(this, "Beat Invasion In " + score + " Seconds", Toast.LENGTH_SHORT);
+//                TODO: Add score to DataBase.
+
+                Toast toast = Toast.makeText(this, "Beat Invasion In " + timer.toString(), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
                 finish();
