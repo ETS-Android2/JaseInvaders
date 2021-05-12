@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(leaderBoardIntent);
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

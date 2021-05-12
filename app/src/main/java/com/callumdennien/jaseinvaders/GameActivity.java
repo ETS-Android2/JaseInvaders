@@ -49,11 +49,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         gamePreferences = GamePreferences.getInstance();
         mathProblems = new MathProblems();
         audioManager = new AudioManager(this);
-        progressBar = findViewById(R.id.progressBar);
-        questionView = findViewById(R.id.questionView);
-        timerView = findViewById(R.id.timerView);
-        answerText = findViewById(R.id.answerText);
-        ufoView = findViewById(R.id.ufoView);
+        progressBar = findViewById(R.id.progress_bar);
+        questionView = findViewById(R.id.question_view);
+        timerView = findViewById(R.id.timer_view);
+        answerText = findViewById(R.id.answer_text);
+        ufoView = findViewById(R.id.ufo_view);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

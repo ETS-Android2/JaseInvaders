@@ -19,15 +19,12 @@ public class Timer {
         return seconds + " Seconds";
     }
 
+    public int getScore() {
+        return seconds;
+    }
+    
     public void add(int i) {
         seconds += i;
     }
 
-    public void reset() {
-        seconds = 0;
-    }
-
-    public int getScore() {
-        return seconds;
-    }
 }

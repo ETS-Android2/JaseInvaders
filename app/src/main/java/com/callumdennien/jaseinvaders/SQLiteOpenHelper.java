@@ -37,6 +37,7 @@ public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT NAME, SCORE FROM SCORES ORDER BY SCORE", null);
 
         HashMap<String, Integer> scores = new HashMap<>();
+
         if (cursor.moveToFirst()) {
             do {
                 scores.put(cursor.getString(1), Integer.parseInt(cursor.getString(0)));

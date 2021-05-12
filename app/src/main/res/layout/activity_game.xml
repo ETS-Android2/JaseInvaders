@@ -16,7 +16,7 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/invaderView"
+            android:id="@+id/invader_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onFirePressed"
@@ -26,7 +26,7 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/timerView"
+            android:id="@+id/timer_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/current_time"
@@ -35,7 +35,7 @@
             android:textSize="15sp" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -46,17 +46,18 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/ufoView"
+        android:id="@+id/ufo_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/turretView"
+        android:contentDescription="@string/ufo_boss"
+        app:layout_constraintBottom_toTopOf="@+id/turret_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/invader_info" />
 
     <ImageView
-        android:id="@+id/turretView"
+        android:id="@+id/turret_view"
         android:layout_width="106dp"
         android:layout_height="113dp"
         android:contentDescription="@string/turret_description"
@@ -89,7 +90,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/questionView"
+            android:id="@+id/question_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/dark_grey"
@@ -100,7 +101,7 @@
             android:textSize="30sp" />
 
         <EditText
-            android:id="@+id/answerText"
+            android:id="@+id/answer_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -111,6 +112,6 @@
             android:padding="10dp"
             android:textAlignment="center"
             android:textSize="30sp" />
-    </LinearLayout>
 
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

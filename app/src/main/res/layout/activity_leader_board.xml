@@ -22,8 +22,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp"
             android:paddingLeft="30dp"
+            android:paddingTop="30dp"
             android:paddingRight="30dp"
             android:text="@string/high_scores"
             android:textAlignment="center"
@@ -34,11 +34,10 @@
             android:id="@+id/score_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/light_grey"
-            android:dividerHeight="8dp"
             android:layout_margin="20dp"
-            android:background="@color/dark_grey" />
+            android:background="@color/dark_grey"
+            android:divider="@color/light_grey"
+            android:dividerHeight="8dp" />
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -135,13 +135,13 @@ public class SettingsActivity extends AppCompatActivity {
         if (!currentStatus.getText().equals(latestUpdate)) {
             twitter.updateStatus(latestUpdate);
             Toast.makeText(this, "Sharing Personal Score", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(this, "Recent Duplicate Tweet", Toast.LENGTH_SHORT).show();
         }
     }
 
     private final TextWatcher textWatcher = new TextWatcher() {
-
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             // before text changes

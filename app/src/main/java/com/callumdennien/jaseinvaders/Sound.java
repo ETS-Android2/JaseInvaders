@@ -1,5 +1,8 @@
 package com.callumdennien.jaseinvaders;
 
 public enum Sound {
-    incorrect, laser, grunt, bomb
+    incorrect,
+    laser,
+    grunt,
+    bomb
 }
