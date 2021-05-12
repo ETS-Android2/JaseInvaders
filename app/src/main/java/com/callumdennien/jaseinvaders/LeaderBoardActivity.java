@@ -22,7 +22,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leader_board);
 
         scoreList = findViewById(R.id.score_list);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        adapter = new ArrayAdapter<>(this, R.layout.score);
         scoreList.setAdapter(adapter);
 
         adapter.add("Callum: 1000 - Easy");
