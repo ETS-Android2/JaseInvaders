@@ -4,12 +4,14 @@ public class GamePreferences {
     private static GamePreferences instance;
     private String player_name;
     private boolean sound_effects;
+    private boolean music;
     private int personal_best;
     private Diffuclty difficulty;
 
     public GamePreferences() {
         player_name = "Anonymous";
         sound_effects = true;
+        music = true;
         personal_best = 999;
         difficulty = Diffuclty.EASY;
     }
@@ -36,6 +38,14 @@ public class GamePreferences {
 
     public void setSoundEffects(boolean sound_effects) {
         this.sound_effects = sound_effects;
+    }
+
+    public boolean getMusic() {
+        return music;
+    }
+
+    public void setMusic(boolean music) {
+        this.music = music;
     }
 
     public int getPersonalBest() {

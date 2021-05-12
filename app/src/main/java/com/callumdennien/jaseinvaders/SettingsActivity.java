@@ -24,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText nameText;
     private Button difficultyButton;
     private Button soundButton;
+    private Button musicButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         nameText = findViewById(R.id.name_text);
         difficultyButton = findViewById(R.id.difficulty);
         soundButton = findViewById(R.id.sound);
+        musicButton = findViewById(R.id.music);
 
         nameText.addTextChangedListener(textWatcher);
 
@@ -55,6 +57,12 @@ public class SettingsActivity extends AppCompatActivity {
             soundButton.setText(R.string.sound_on);
         } else if (!(gamePreferences.getSoundEffects())) {
             soundButton.setText(R.string.sound_off);
+        }
+
+        if (gamePreferences.getMusic()) {
+            musicButton.setText(R.string.music_on);
+        } else if (!(gamePreferences.getMusic())) {
+            musicButton.setText(R.string.music_off);
         }
     }
 
@@ -101,6 +109,19 @@ public class SettingsActivity extends AppCompatActivity {
             case "Sound: off":
                 gamePreferences.setSoundEffects(true);
                 soundButton.setText(R.string.sound_on);
+                break;
+        }
+    }
+
+    public void onMusicClicked(View view) {
+        switch (musicButton.getText().toString()) {
+            case "Music: on":
+                gamePreferences.setMusic(false);
+                musicButton.setText(R.string.music_off);
+                break;
+            case "Music: off":
+                gamePreferences.setMusic(true);
+                musicButton.setText(R.string.music_on);
                 break;
         }
     }

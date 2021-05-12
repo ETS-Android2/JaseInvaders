@@ -1,5 +1,6 @@
 package com.callumdennien.jaseinvaders;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -22,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
     private GamePreferences gamePreferences;
     private MathProblems mathProblems;
     private AudioManager audioManager;
+    private MediaPlayer mediaPlayer;
     private Timer timer;
     private Handler handler;
     private ProgressBar progressBar;
@@ -56,6 +58,14 @@ public class GameActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    private void playMusic() {
+        if (gamePreferences.getMusic()) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.game_background);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
+    }
+
     private void enableTimer() {
         timer = new Timer();
         handler = new Handler();
@@ -77,6 +87,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         audioManager.toggle(gamePreferences.getSoundEffects());
+        playMusic();
 
         switch (gamePreferences.getDifficulty()) {
             case "EASY MODE":
@@ -96,7 +107,14 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        mediaPlayer.stop();
         // Save Settings/Time
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.stop();
     }
 
     private void createMathProblem() {

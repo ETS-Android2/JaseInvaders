@@ -17,4 +17,6 @@
     <string name="sound_off">Sound: off</string>
     <string name="share">Share</string>
     <string name="enter_name">ENTER NAME</string>
+    <string name="music_on">Music: on</string>
+    <string name="music_off">Music: off</string>
 </resources>

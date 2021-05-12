@@ -66,6 +66,17 @@
             android:textSize="30sp" />
 
         <Button
+            android:id="@+id/music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@color/dark_grey"
+            android:onClick="onMusicClicked"
+            android:text="@string/music_on"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <Button
             android:id="@+id/share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
