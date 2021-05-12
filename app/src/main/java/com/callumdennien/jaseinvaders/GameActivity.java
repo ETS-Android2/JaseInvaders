@@ -6,15 +6,12 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,20 +22,19 @@ public class GameActivity extends AppCompatActivity {
     private AudioManager audioManager;
     private MediaPlayer mediaPlayer;
     private Timer timer;
+    private TextView timerView;
     private Handler handler;
+    private boolean isRunning;
     private ProgressBar progressBar;
     private TextView questionView;
     private EditText answerText;
-    private TextView timerView;
-    private Integer problemAnswer;
-    private boolean isRunning;
-    private final int speed = 1000;
+//    private int currentAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+//
         gamePreferences = GamePreferences.getInstance();
         mathProblems = new MathProblems();
         audioManager = new AudioManager(this);
@@ -46,40 +42,15 @@ public class GameActivity extends AppCompatActivity {
         questionView = findViewById(R.id.questionView);
         timerView = findViewById(R.id.timerView);
         answerText = findViewById(R.id.answerText);
-        ImageView ufoView = findViewById(R.id.ufoView);
-
+//        ImageView ufoView = findViewById(R.id.ufoView);
+//
         isRunning = false;
         enableTimer();
-        Glide.with(this).load(R.drawable.ufo_boss).into(ufoView);
-
+//        Glide.with(this).load(R.drawable.ufo_boss).into(ufoView);
+//
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void playMusic(boolean playing) {
-        if (playing) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.game_background);
-            mediaPlayer.setLooping(true);
-            mediaPlayer.start();
-        }
-    }
-
-    private void enableTimer() {
-        timer = new Timer();
-        handler = new Handler();
-        isRunning = true;
-
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (isRunning) {
-                    timer.tick();
-                    timerView.setText(timer.toString());
-                    handler.postDelayed(this, speed);
-                }
-            }
-        });
     }
 
     @Override
@@ -100,24 +71,27 @@ public class GameActivity extends AppCompatActivity {
                 break;
         }
 
-        createMathProblem();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (gamePreferences.getMusic()) {
-            mediaPlayer.stop();
+        if (gamePreferences.getCurrentQuestion().equals("1 / 1 =")) {
+            createMathProblem();
         }
-        // Save Settings/Time
+
+        questionView.setText(gamePreferences.getCurrentQuestion());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        gamePreferences.setCurrentScore(timer.getScore());
+
         if (gamePreferences.getMusic()) {
             mediaPlayer.stop();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        timer.add(gamePreferences.getCurrentScore());
     }
 
     private void createMathProblem() {
@@ -140,76 +114,90 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void updateViewDivision() {
-        ArrayList<Integer> mathProblem = mathProblems.getDivision();
-        String mathFormula = mathProblem.get(0) + " / " + mathProblem.get(1) + " =";
-        questionView.setText(mathFormula);
-        problemAnswer = mathProblem.get(2);
-    }
-
-    private void updateViewMultiplication() {
-        ArrayList<Integer> mathProblem = mathProblems.getMultiplication();
-        String mathFormula = mathProblem.get(0) + " x " + mathProblem.get(1) + " =";
-        questionView.setText(mathFormula);
-        problemAnswer = mathProblem.get(2);
+    private void updateViewAddition() {
+        ArrayList<Integer> currentProblem = mathProblems.getAddition();
+        gamePreferences.setCurrentQuestion(currentProblem.get(0) + " + " + currentProblem.get(1) + " =");
+        gamePreferences.setCurrentAnswer(currentProblem.get(2));
     }
 
     private void updateViewSubtraction() {
-        ArrayList<Integer> mathProblem = mathProblems.getSubtraction();
-        String mathFormula = mathProblem.get(0) + " - " + mathProblem.get(1) + " =";
-        questionView.setText(mathFormula);
-        problemAnswer = mathProblem.get(2);
+        ArrayList<Integer> currentProblem = mathProblems.getSubtraction();
+        gamePreferences.setCurrentQuestion(currentProblem.get(0) + " - " + currentProblem.get(1) + " =");
+        gamePreferences.setCurrentAnswer(currentProblem.get(2));
     }
 
-    private void updateViewAddition() {
-        ArrayList<Integer> mathProblem = mathProblems.getAddition();
-        String mathFormula = mathProblem.get(0) + " + " + mathProblem.get(1) + " =";
-        questionView.setText(mathFormula);
-        problemAnswer = mathProblem.get(2);
+    private void updateViewMultiplication() {
+        ArrayList<Integer> currentProblem = mathProblems.getMultiplication();
+        gamePreferences.setCurrentQuestion(currentProblem.get(0) + " x " + currentProblem.get(1) + " =");
+        gamePreferences.setCurrentAnswer(currentProblem.get(2));
     }
 
-    public void onFirePressed(View view) throws InterruptedException {
+    private void updateViewDivision() {
+        ArrayList<Integer> currentProblem = mathProblems.getDivision();
+        gamePreferences.setCurrentQuestion(currentProblem.get(0) + " / " + currentProblem.get(1) + " =");
+        gamePreferences.setCurrentAnswer(currentProblem.get(2));
+    }
+
+    public void onFirePressed(View view) {
         String guess = answerText.getText().toString();
 
-        if (guess.equals(String.valueOf(problemAnswer))) {
-            if (!(progressBar.getProgress() == 10)) {
-                if (audioManager.isReady()) {
-                    audioManager.play(Sound.laser);
-                    audioManager.play(Sound.grunt);
-                }
-
-                progressBar.setProgress(progressBar.getProgress() - 10);
-                answerText.setText("");
-                createMathProblem();
-
-            } else {
-                if (audioManager.isReady()) {
-                    audioManager.play(Sound.bomb);
-                }
-
-                isRunning = false;
-                progressBar.setProgress(progressBar.getProgress() - 10);
-                answerText.setText("");
-
-                if (timer.getScore() > gamePreferences.getPersonalBest()) {
-                    gamePreferences.setPersonalBest(timer.getScore());
-                }
-
-//                TODO: Add score to DataBase.
-
-                Toast toast = Toast.makeText(this, "Beat Invasion In " + timer.toString(), Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                finish();
-            }
-
+        if (!guess.equals("") && Integer.parseInt(guess) == gamePreferences.getCurrentAnswer()) {
+            damageUFO();
         } else {
-            System.out.println(problemAnswer);
             timer.tick();
             timerView.setText(timer.toString());
 
             if (audioManager.isReady()) {
                 audioManager.play(Sound.incorrect);
+            }
+        }
+    }
+
+    private void enableTimer() {
+        timer = new Timer();
+        handler = new Handler();
+        isRunning = true;
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isRunning) {
+                    timer.tick();
+                    timerView.setText(timer.toString());
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        });
+    }
+
+    private void playMusic(boolean playing) {
+        if (playing) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.game_background);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
+    }
+
+    private void damageUFO() {
+        if (audioManager.isReady()) {
+            if (progressBar.getProgress() > 10) {
+                audioManager.play(Sound.laser);
+                audioManager.play(Sound.grunt);
+                progressBar.setProgress(progressBar.getProgress() - 10);
+                answerText.setText("");
+
+            } else {
+                isRunning = false;
+                audioManager.play(Sound.bomb);
+                progressBar.setProgress(progressBar.getProgress() - 10);
+
+                gamePreferences.setPersonalBest(Math.max(timer.getScore(), gamePreferences.getPersonalBest()));
+                // TODO: Create Database input
+
+                Toast toast = Toast.makeText(this, "Beat Invasion In " + timer.toString(), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                finish();
             }
         }
     }

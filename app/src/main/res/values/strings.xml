@@ -19,4 +19,5 @@
     <string name="enter_name">ENTER NAME</string>
     <string name="music_on">Music: on</string>
     <string name="music_off">Music: off</string>
+    <string name="popup_text">Share your personal best?</string>
 </resources>

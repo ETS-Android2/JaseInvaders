@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -126,9 +127,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onShareClicked(View view) throws TwitterException {
+
         Twitter twitter = TwitterFactory.getSingleton();
-        twitter.updateStatus("I stopped an invasion in " + gamePreferences.getPersonalBest() + " Seconds. #JaseInvaders");
-        Toast.makeText(this, "Shared Personal Score", Toast.LENGTH_SHORT).show();
+        Status currentStatus = twitter.getHomeTimeline().get(0);
+        String latestUpdate = "I stopped an invasion in " + gamePreferences.getPersonalBest() + "Seconds. #JaseInvaders";
+
+        if (!currentStatus.getText().equals(latestUpdate)) {
+            twitter.updateStatus(latestUpdate);
+            Toast.makeText(this, "Sharing Personal Score", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Recent Duplicate Tweet", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private final TextWatcher textWatcher = new TextWatcher() {
