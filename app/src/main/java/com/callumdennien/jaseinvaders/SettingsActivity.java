@@ -44,7 +44,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         nameText.setText(gamePreferences.getPlayerName());
         difficultyButton.setText(gamePreferences.getDifficulty());
-        soundButton.setText(String.valueOf(gamePreferences.getSoundEffects()));
+
+        if (gamePreferences.getSoundEffects()) {
+            soundButton.setText(R.string.sound_on);
+        } else if (!(gamePreferences.getSoundEffects())) {
+            soundButton.setText(R.string.sound_off);
+        }
     }
 
     @Override
@@ -85,11 +90,11 @@ public class SettingsActivity extends AppCompatActivity {
         switch (soundButton.getText().toString()) {
             case "Sound: on":
                 gamePreferences.setSoundEffects(false);
-                soundButton.setText(String.valueOf(gamePreferences.getSoundEffects()));
+                soundButton.setText(R.string.sound_off);
                 break;
             case "Sound: off":
                 gamePreferences.setSoundEffects(true);
-                soundButton.setText(String.valueOf(gamePreferences.getSoundEffects()));
+                soundButton.setText(R.string.sound_on);
                 break;
         }
     }
