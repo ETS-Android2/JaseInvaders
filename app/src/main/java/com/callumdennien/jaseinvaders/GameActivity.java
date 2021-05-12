@@ -28,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView questionView;
     private EditText answerText;
     private TextView timerView;
+    private ImageView ufoView;
     private Integer problemAnswer;
     private boolean isRunning;
     private final int speed = 1000;
@@ -44,9 +45,11 @@ public class GameActivity extends AppCompatActivity {
         questionView = findViewById(R.id.questionView);
         timerView = findViewById(R.id.timerView);
         answerText = findViewById(R.id.answerText);
+        ufoView = findViewById(R.id.ufoView);
 
         isRunning = false;
         enableTimer();
+        Glide.with(this).load(R.drawable.ufo_boss).into(ufoView);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
