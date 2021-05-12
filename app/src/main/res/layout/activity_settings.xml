@@ -38,7 +38,6 @@
             android:hint="@string/enter_name"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:text="@string/anonymous"
             android:textAlignment="center"
             android:textColor="@color/dark_grey"
             android:textSize="30sp"

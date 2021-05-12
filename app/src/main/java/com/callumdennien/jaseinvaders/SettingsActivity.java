@@ -1,6 +1,8 @@
 package com.callumdennien.jaseinvaders;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
         difficultyButton = findViewById(R.id.difficulty);
         soundButton = findViewById(R.id.sound);
 
+        nameText.addTextChangedListener(textWatcher);
+
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -41,9 +45,11 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        nameText.setText(gamePreferences.getPlayerName());
         difficultyButton.setText(gamePreferences.getDifficulty());
+
+        if (!gamePreferences.getPlayerName().equals("Anonymous")) {
+            nameText.setText(gamePreferences.getPlayerName());
+        }
 
         if (gamePreferences.getSoundEffects()) {
             soundButton.setText(R.string.sound_on);
@@ -71,15 +77,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onDifficultyClicked(View view) {
         switch (difficultyButton.getText().toString()) {
-            case "Difficulty: Easy":
+            case "EASY MODE":
                 gamePreferences.setDifficulty(Diffuclty.MEDIUM);
                 difficultyButton.setText(gamePreferences.getDifficulty());
                 break;
-            case "Difficulty: Normal":
+            case "MEDIUM MODE":
                 gamePreferences.setDifficulty(Diffuclty.HARD);
                 difficultyButton.setText(gamePreferences.getDifficulty());
                 break;
-            case "Difficulty: Hard":
+            case "HARD MODE":
                 gamePreferences.setDifficulty(Diffuclty.EASY);
                 difficultyButton.setText(gamePreferences.getDifficulty());
                 break;
@@ -104,4 +110,22 @@ public class SettingsActivity extends AppCompatActivity {
         Status status = twitter.updateStatus("I stopped an invasion in " + gamePreferences.getPersonalBest() + " Seconds. #JaseInvaders");
         Toast.makeText(this, "Shared Personal Score", Toast.LENGTH_SHORT).show();
     }
+
+    private final TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // before text changes
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // during text changes
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            gamePreferences.setPlayerName(nameText.getText().toString());
+        }
+    };
 }

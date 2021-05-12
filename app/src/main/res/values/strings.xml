@@ -16,6 +16,5 @@
     <string name="sound_on">Sound: on</string>
     <string name="sound_off">Sound: off</string>
     <string name="share">Share</string>
-    <string name="anonymous">Anonymous</string>
     <string name="enter_name">ENTER NAME</string>
 </resources>
