@@ -59,9 +59,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+        gamePreferences.setCurrentScore(0);
         isRunning = false;
         enableTimer();
         drawUFO();
+        setupGame();
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -74,23 +76,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         audioManager.toggle(gamePreferences.getSoundEffects());
         playMusic(gamePreferences.getMusic());
 
-        switch (gamePreferences.getDifficulty()) {
-            case "EASY MODE":
-                mathProblems.setDifficulty(10);
-                break;
-            case "MEDIUM MODE":
-                mathProblems.setDifficulty(20);
-                break;
-            case "HARD MODE":
-                mathProblems.setDifficulty(30);
-                break;
-        }
-
-        if (gamePreferences.getCurrentQuestion().equals("1 / 1 =")) {
-            createMathProblem();
-        }
-
-        questionView.setText(gamePreferences.getCurrentQuestion());
         createToast("Shake Screen to Change/Reset Question");
     }
 
@@ -109,7 +94,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-        timer.add(gamePreferences.getCurrentScore());
+        timer.set(gamePreferences.getCurrentScore());
     }
 
     @Override
@@ -134,6 +119,28 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         Log.i(sensor.getName(), String.valueOf(accuracy));
+    }
+
+    private void setupGame() {
+        switch (gamePreferences.getDifficulty()) {
+            case "EASY MODE":
+                mathProblems.setDifficulty(10);
+                break;
+            case "MEDIUM MODE":
+                mathProblems.setDifficulty(20);
+                break;
+            case "HARD MODE":
+                mathProblems.setDifficulty(30);
+                break;
+        }
+
+        if (gamePreferences.getCurrentQuestion().equals("1 / 1 =")) {
+            createMathProblem();
+        }
+
+        createMathProblem();
+        gamePreferences.setAnsweredQuestion(false);
+        questionView.setText(gamePreferences.getCurrentQuestion());
     }
 
     private void createMathProblem() {
