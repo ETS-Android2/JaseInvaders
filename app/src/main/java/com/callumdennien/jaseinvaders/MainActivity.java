@@ -39,11 +39,15 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings_item:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
-                return true;
+                break;
             case R.id.leader_board_item:
                 Intent leaderBoardIntent = new Intent(this, LeaderBoardActivity.class);
                 startActivity(leaderBoardIntent);
-                return true;
+                break;
+            case R.id.instructions_item:
+                Intent instructionsIntent = new Intent(this, InstructionsActivity.class);
+                startActivity(instructionsIntent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
