@@ -22,4 +22,10 @@
     <string name="jason_description">Jason Image</string>
     <string name="space_background">space background</string>
     <string name="instructions">Instructions</string>
+    <string name="instructions_one">Change your name in SETTINGS.</string>
+    <string name="instructions_two">Click START. Answer the maths question in the ANSWER box and click FIRE.</string>
+    <string name="instructions_three">Shake your device to skip a question, or to move to the next question.</string>
+    <string name="instructions_1">1)</string>
+    <string name="instructions_2">2)</string>
+    <string name="instructions_3">3)</string>
 </resources>
