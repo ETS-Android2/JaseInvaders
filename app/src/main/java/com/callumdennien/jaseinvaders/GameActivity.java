@@ -108,7 +108,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         float movement = accelerometer - gravityEarth;
         float phoneShake = 10f * 0.9f + movement;
 
-        if (phoneShake > 10) {
+        if (phoneShake > 20) {
             gamePreferences.setAnsweredQuestion(false);
             answerText.setText("");
             createMathProblem();
