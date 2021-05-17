@@ -2,7 +2,7 @@
     <string name="app_name">JaseInvaders</string>
     <string name="start_button">Start</string>
     <string name="math_question">1 + 1 =</string>
-    <string name="answer_hint">ANSWER HERE…</string>
+    <string name="math_answer">1</string>
     <string name="turret_description">turret</string>
     <string name="invader_health">Invader Health</string>
     <string name="fire_button">FIRE</string>
