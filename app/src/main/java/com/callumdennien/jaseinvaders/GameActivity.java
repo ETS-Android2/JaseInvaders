@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,10 +33,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private MediaPlayer mediaPlayer;
     private Timer timer;
     private Handler handler;
+    private final Random random = new Random();
     private TextView timerView;
     private ProgressBar progressBar;
     private TextView questionView;
-    private EditText answerText;
+    private TextView optionOneView;
+    private TextView optionTwoView;
+    private TextView optionThreeView;
+    private TextView optionFourView;
     private ImageView ufoView;
     private boolean isRunning;
 
@@ -51,8 +54,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         audioManager = new AudioManager(this);
         progressBar = findViewById(R.id.progress_bar);
         questionView = findViewById(R.id.question_view);
+        optionOneView = findViewById(R.id.option_one);
+        optionTwoView = findViewById(R.id.option_two);
+        optionThreeView = findViewById(R.id.option_three);
+        optionFourView = findViewById(R.id.option_four);
         timerView = findViewById(R.id.timer_view);
-        answerText = findViewById(R.id.answer_text);
         ufoView = findViewById(R.id.ufo_view);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -108,10 +114,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         float movement = accelerometer - gravityEarth;
         float phoneShake = 10f * 0.9f + movement;
 
-        if (phoneShake > 20) {
+        if (phoneShake > 10) {
             gamePreferences.setAnsweredQuestion(false);
-            answerText.setText("");
             createMathProblem();
+            displayAnswers();
             questionView.setText(gamePreferences.getCurrentQuestion());
         }
     }
@@ -139,12 +145,41 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
 
         createMathProblem();
+        displayAnswers();
         gamePreferences.setAnsweredQuestion(false);
         questionView.setText(gamePreferences.getCurrentQuestion());
     }
 
+    private void enableTimer() {
+        timer = new Timer();
+        handler = new Handler();
+        isRunning = true;
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isRunning) {
+                    timer.tick();
+                    timerView.setText(timer.toString());
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        });
+    }
+
+    private void drawUFO() {
+        Glide.with(this).load(R.drawable.ufo_boss).into(ufoView);
+    }
+
+    private void playMusic(boolean playing) {
+        if (playing) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.game_background);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
+    }
+
     private void createMathProblem() {
-        Random random = new Random();
         int randomNumber = random.nextInt(4) + 1;
 
         switch (randomNumber) {
@@ -187,50 +222,74 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         gamePreferences.setCurrentAnswer(currentProblem.get(2));
     }
 
-    public void onFirePressed(View view) {
-        String guess = answerText.getText().toString();
+    private void displayAnswers() {
+        int optionCorrect = random.nextInt(4) + 1;
 
-        if (!guess.equals("") && Integer.parseInt(guess) == gamePreferences.getCurrentAnswer()) {
-            if (!gamePreferences.getAnsweredQuestion()) {
-                damageUFO();
-            }
-
-        } else {
-            timer.tick();
-            timerView.setText(timer.toString());
-
-            if (audioManager.isReady()) {
-                audioManager.play(Sound.incorrect);
-            }
+        switch (optionCorrect) {
+            case 1:
+                optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
+                optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                break;
+            case 2:
+                optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
+                optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                break;
+            case 3:
+                optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
+                optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                break;
+            case 4:
+                optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
+                break;
         }
     }
 
-    private void enableTimer() {
-        timer = new Timer();
-        handler = new Handler();
-        isRunning = true;
+    public void onOptionOneClicked(View view) {
+        int guess = Integer.parseInt(optionOneView.getText().toString());
 
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (isRunning) {
-                    timer.tick();
-                    timerView.setText(timer.toString());
-                    handler.postDelayed(this, 1000);
-                }
-            }
-        });
+        if (guess == gamePreferences.getCurrentAnswer() && !gamePreferences.getAnsweredQuestion()) {
+            damageUFO();
+        } else {
+            incorrectGuess();
+        }
     }
 
-    private void drawUFO() {
-        Glide.with(this).load(R.drawable.ufo_boss).into(ufoView);
+    public void onOptionTwoClicked(View view) {
+        int guess = Integer.parseInt(optionTwoView.getText().toString());
+
+        if (guess == gamePreferences.getCurrentAnswer() && !gamePreferences.getAnsweredQuestion()) {
+            damageUFO();
+        } else {
+            incorrectGuess();
+        }
     }
 
-    private void playMusic(boolean playing) {
-        if (playing) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.game_background);
-            mediaPlayer.setLooping(true);
-            mediaPlayer.start();
+    public void onOptionThreeClicked(View view) {
+        int guess = Integer.parseInt(optionThreeView.getText().toString());
+
+        if (guess == gamePreferences.getCurrentAnswer() && !gamePreferences.getAnsweredQuestion()) {
+            damageUFO();
+        } else {
+            incorrectGuess();
+        }
+    }
+
+    public void onOptionFourClicked(View view) {
+        int guess = Integer.parseInt(optionFourView.getText().toString());
+
+        if (guess == gamePreferences.getCurrentAnswer() && !gamePreferences.getAnsweredQuestion()) {
+            damageUFO();
+        } else {
+            incorrectGuess();
         }
     }
 
@@ -256,6 +315,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 createToast("Beat Invasion In " + timer.toString());
                 finish();
             }
+        }
+    }
+
+    private void incorrectGuess() {
+        timer.tick();
+        timerView.setText(timer.toString());
+
+        if (audioManager.isReady()) {
+            audioManager.play(Sound.incorrect);
         }
     }
 
