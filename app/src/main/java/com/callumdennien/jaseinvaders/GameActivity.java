@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
@@ -224,30 +225,41 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private void displayAnswers() {
         int optionCorrect = random.nextInt(4) + 1;
+        ArrayList<Integer> optionsIncorrect = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            if (i % 2 == 0) {
+                optionsIncorrect.add(gamePreferences.getCurrentAnswer() + i);
+            } else {
+                optionsIncorrect.add(gamePreferences.getCurrentAnswer() - i);
+            }
+        }
+
+        Collections.shuffle(optionsIncorrect);
 
         switch (optionCorrect) {
             case 1:
                 optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
-                optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
-                optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
-                optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionTwoView.setText(optionsIncorrect.get(2));
+                optionThreeView.setText(optionsIncorrect.get(3));
+                optionFourView.setText(optionsIncorrect.get(4));
                 break;
             case 2:
-                optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionOneView.setText(optionsIncorrect.get(1));
                 optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
-                optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
-                optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionThreeView.setText(optionsIncorrect.get(3));
+                optionFourView.setText(optionsIncorrect.get(4));
                 break;
             case 3:
-                optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
-                optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionOneView.setText(optionsIncorrect.get(1));
+                optionTwoView.setText(optionsIncorrect.get(2));
                 optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
-                optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionFourView.setText(optionsIncorrect.get(4));
                 break;
             case 4:
-                optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
-                optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
-                optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer() + random.nextInt(4) + 1));
+                optionOneView.setText(optionsIncorrect.get(1));
+                optionTwoView.setText(optionsIncorrect.get(2));
+                optionThreeView.setText(optionsIncorrect.get(3));
                 optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
                 break;
         }
