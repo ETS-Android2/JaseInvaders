@@ -12,12 +12,7 @@ public class MathProblems {
         int addendsTwo = random.nextInt(difficultyLevel);
         int answer = addendsOne + addendsTwo;
 
-        ArrayList<Integer> problem = new ArrayList<>();
-        problem.add(addendsOne);
-        problem.add(addendsTwo);
-        problem.add(answer);
-
-        return problem;
+        return createProblem(addendsOne, addendsTwo, answer);
     }
 
     public ArrayList<Integer> getSubtraction() {
@@ -25,12 +20,7 @@ public class MathProblems {
         int subtrahend = random.nextInt(minuend);
         int answerDifference = minuend - subtrahend;
 
-        ArrayList<Integer> problem = new ArrayList<>();
-        problem.add(minuend);
-        problem.add(subtrahend);
-        problem.add(answerDifference);
-
-        return problem;
+        return createProblem(minuend, subtrahend, answerDifference);
     }
 
     public ArrayList<Integer> getMultiplication() {
@@ -38,12 +28,7 @@ public class MathProblems {
         int multiplier = random.nextInt(multiplicand);
         int answerProduct = multiplicand * multiplier;
 
-        ArrayList<Integer> problem = new ArrayList<>();
-        problem.add(multiplicand);
-        problem.add(multiplier);
-        problem.add(answerProduct);
-
-        return problem;
+        return createProblem(multiplicand, multiplier, answerProduct);
     }
 
     public ArrayList<Integer> getDivision() {
@@ -51,10 +36,14 @@ public class MathProblems {
         int divisor = random.nextInt(dividend) + 1;
         int answerQuotient = dividend / divisor;
 
+        return createProblem(dividend, divisor, answerQuotient);
+    }
+
+    private ArrayList<Integer> createProblem(int addendsOne, int addendsTwo, int answer) {
         ArrayList<Integer> problem = new ArrayList<>();
-        problem.add(dividend);
-        problem.add(divisor);
-        problem.add(answerQuotient);
+        problem.add(addendsOne);
+        problem.add(addendsTwo);
+        problem.add(answer);
 
         return problem;
     }

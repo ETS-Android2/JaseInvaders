@@ -225,13 +225,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private void displayAnswers() {
         int optionCorrect = random.nextInt(4) + 1;
-        ArrayList<Integer> optionsIncorrect = new ArrayList<>();
+        ArrayList<String> optionsIncorrect = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 10; i++) {
             if (i % 2 == 0) {
-                optionsIncorrect.add(gamePreferences.getCurrentAnswer() + i);
+                optionsIncorrect.add(String.valueOf(gamePreferences.getCurrentAnswer() + i));
             } else {
-                optionsIncorrect.add(gamePreferences.getCurrentAnswer() - i);
+                optionsIncorrect.add(String.valueOf(gamePreferences.getCurrentAnswer() - i));
+
             }
         }
 
@@ -267,45 +268,33 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     public void onOptionOneClicked(View view) {
         int guess = Integer.parseInt(optionOneView.getText().toString());
-
-        if (guess == gamePreferences.getCurrentAnswer() && !gamePreferences.getAnsweredQuestion()) {
-            damageUFO();
-        } else {
-            incorrectGuess();
-        }
+        checkGuess(guess);
     }
 
     public void onOptionTwoClicked(View view) {
         int guess = Integer.parseInt(optionTwoView.getText().toString());
-
-        if (guess == gamePreferences.getCurrentAnswer() && !gamePreferences.getAnsweredQuestion()) {
-            damageUFO();
-        } else {
-            incorrectGuess();
-        }
+        checkGuess(guess);
     }
 
     public void onOptionThreeClicked(View view) {
         int guess = Integer.parseInt(optionThreeView.getText().toString());
-
-        if (guess == gamePreferences.getCurrentAnswer() && !gamePreferences.getAnsweredQuestion()) {
-            damageUFO();
-        } else {
-            incorrectGuess();
-        }
+        checkGuess(guess);
     }
 
     public void onOptionFourClicked(View view) {
         int guess = Integer.parseInt(optionFourView.getText().toString());
+        checkGuess(guess);
+    }
 
-        if (guess == gamePreferences.getCurrentAnswer() && !gamePreferences.getAnsweredQuestion()) {
-            damageUFO();
+    private void checkGuess(int guess) {
+        if (guess == gamePreferences.getCurrentAnswer() && gamePreferences.getAnsweredQuestion()) {
+            correctGuess();
         } else {
             incorrectGuess();
         }
     }
 
-    private void damageUFO() {
+    private void correctGuess() {
         gamePreferences.setAnsweredQuestion(true);
 
         if (audioManager.isReady()) {

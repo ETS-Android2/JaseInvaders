@@ -22,6 +22,8 @@ public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS SCORES");
+        onCreate(db);
     }
 
     public void insertScore(SQLiteDatabase db, String valueName, int valueScore) {

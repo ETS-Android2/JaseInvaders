@@ -19,9 +19,9 @@ public class LeaderBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader_board);
 
-        ListView scoreList = findViewById(R.id.score_list);
         database = new SQLiteOpenHelper(this);
         adapter = new ArrayAdapter<>(this, R.layout.score);
+        ListView scoreList = findViewById(R.id.score_list);
         scoreList.setAdapter(adapter);
 
         getLeaderBoard();

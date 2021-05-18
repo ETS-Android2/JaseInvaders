@@ -65,7 +65,7 @@ public class GamePreferences {
     }
 
     public boolean getAnsweredQuestion() {
-        return answered_question;
+        return !answered_question;
     }
 
     public void setAnsweredQuestion(boolean answered_question) {
