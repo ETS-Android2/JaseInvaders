@@ -13,7 +13,7 @@
         android:theme="@style/Theme.JaseInvaders">
         <activity
             android:name=".InstructionsActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LeaderBoardActivity"
             android:parentActivityName=".MainActivity" />
