@@ -41,8 +41,8 @@ public class GamePreferences {
         this.player_name = player_name;
     }
 
-    public String getDifficulty() {
-        return difficulty.difficultyText;
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
     public void setDifficulty(Difficulty difficulty) {

@@ -138,21 +138,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void setupGame() {
-        // set math problem difficulty level based on game difficulty.
-        switch (gamePreferences.getDifficulty()) {
-            case "EASY MODE":
-                mathProblems.setDifficulty(10);
-                break;
-            case "MEDIUM MODE":
-                mathProblems.setDifficulty(20);
-                break;
-            case "HARD MODE":
-                mathProblems.setDifficulty(30);
-                break;
-        }
-
-        // generate math problem, update question view and preferences.
+        // set math problem difficulty level based on game difficulty, create math problem.
+        mathProblems.setDifficulty(gamePreferences.getDifficulty().difficultyValue);
         createMathProblem();
+
+        // update question view and preferences.
         displayAnswers();
         gamePreferences.setAnsweredQuestion(false);
         questionView.setText(gamePreferences.getCurrentQuestion());
