@@ -34,7 +34,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private MediaPlayer mediaPlayer;
     private Timer timer;
     private Handler handler;
-    private final Random random = new Random();
+    private Random random;
     private TextView timerView;
     private ProgressBar progressBar;
     private TextView questionView;
@@ -54,6 +54,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         gamePreferences = GamePreferences.getInstance();
         mathProblems = new MathProblems();
         audioManager = new AudioManager(this);
+        random = new Random();
         progressBar = findViewById(R.id.progress_bar);
         questionView = findViewById(R.id.question_view);
         optionOneView = findViewById(R.id.option_one);
@@ -69,8 +70,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         // setup game screen
-        gamePreferences.setCurrentScore(0);
-        isRunning = false;
         enableTimer();
         drawUFO();
         setupGame();
@@ -153,6 +152,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         timer = new Timer();
         handler = new Handler();
         isRunning = true;
+        gamePreferences.setCurrentScore(0);
 
         handler.post(new Runnable() {
             @Override
@@ -267,11 +267,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         // guess option guess, check against answer.
         TextView guessView = (TextView) view;
         int guess = Integer.parseInt(guessView.getText().toString());
-        checkGuess(guess);
-    }
 
-    private void checkGuess(int guess) {
-        // call differing method if guess is correct or incorrect.
         if (guess == gamePreferences.getCurrentAnswer() && gamePreferences.getAnsweredQuestion()) {
             correctGuess();
         } else {

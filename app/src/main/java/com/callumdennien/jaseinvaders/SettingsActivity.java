@@ -50,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onStart() {
         // initialise all current settings stored in gamePreferences.
         super.onStart();
-        difficultyButton.setText(gamePreferences.getDifficulty());
+        difficultyButton.setText(gamePreferences.getDifficulty().difficultyText);
 
         if (!gamePreferences.getPlayerName().equals("Anonymous")) {
             nameText.setText(gamePreferences.getPlayerName());
@@ -84,15 +84,15 @@ public class SettingsActivity extends AppCompatActivity {
         switch (difficultyButton.getText().toString()) {
             case "EASY MODE":
                 gamePreferences.setDifficulty(Difficulty.MEDIUM);
-                difficultyButton.setText(gamePreferences.getDifficulty());
+                difficultyButton.setText(gamePreferences.getDifficulty().difficultyText);
                 break;
             case "MEDIUM MODE":
                 gamePreferences.setDifficulty(Difficulty.HARD);
-                difficultyButton.setText(gamePreferences.getDifficulty());
+                difficultyButton.setText(gamePreferences.getDifficulty().difficultyText);
                 break;
             case "HARD MODE":
                 gamePreferences.setDifficulty(Difficulty.EASY);
-                difficultyButton.setText(gamePreferences.getDifficulty());
+                difficultyButton.setText(gamePreferences.getDifficulty().difficultyText);
                 break;
         }
     }
