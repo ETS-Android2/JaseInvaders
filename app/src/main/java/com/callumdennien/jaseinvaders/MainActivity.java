@@ -23,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // inflate main menu to display items.
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     public void onStartPressed(View view) {
+        // create an intent for GameActivity, start the activity.
         Intent gameIntent = new Intent(this, GameActivity.class);
         startActivity(gameIntent);
     }
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // check for menu item selected, start activity depending on choice.
         switch (item.getItemId()) {
             case R.id.settings_item:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);

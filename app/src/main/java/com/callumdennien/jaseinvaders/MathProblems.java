@@ -8,14 +8,16 @@ public class MathProblems {
     private final Random random = new Random();
 
     public ArrayList<Integer> getAddition() {
+        // generate two random numbers and their sum, return as array list.
         int addendsOne = random.nextInt(difficultyLevel);
         int addendsTwo = random.nextInt(difficultyLevel);
-        int answer = addendsOne + addendsTwo;
+        int answerSum = addendsOne + addendsTwo;
 
-        return createProblem(addendsOne, addendsTwo, answer);
+        return createProblem(addendsOne, addendsTwo, answerSum);
     }
 
     public ArrayList<Integer> getSubtraction() {
+        // generate two random numbers and their difference, return as array list.
         int minuend = random.nextInt(difficultyLevel) + 1;
         int subtrahend = random.nextInt(minuend);
         int answerDifference = minuend - subtrahend;
@@ -24,6 +26,7 @@ public class MathProblems {
     }
 
     public ArrayList<Integer> getMultiplication() {
+        // generate two random numbers and their product, return as array list.
         int multiplicand = random.nextInt(difficultyLevel) + 1;
         int multiplier = random.nextInt(multiplicand);
         int answerProduct = multiplicand * multiplier;
@@ -32,6 +35,7 @@ public class MathProblems {
     }
 
     public ArrayList<Integer> getDivision() {
+        // generate two random numbers and their quotient, return as array list.
         int dividend = random.nextInt(difficultyLevel) + 1;
         int divisor = random.nextInt(dividend) + 1;
         int answerQuotient = dividend / divisor;
@@ -39,20 +43,18 @@ public class MathProblems {
         return createProblem(dividend, divisor, answerQuotient);
     }
 
-    private ArrayList<Integer> createProblem(int addendsOne, int addendsTwo, int answer) {
+    private ArrayList<Integer> createProblem(int firstValue, int secondValue, int answer) {
+        // create array list with problem values and answer.
         ArrayList<Integer> problem = new ArrayList<>();
-        problem.add(addendsOne);
-        problem.add(addendsTwo);
+        problem.add(firstValue);
+        problem.add(secondValue);
         problem.add(answer);
 
         return problem;
     }
 
-    public int getDifficulty() {
-        return difficultyLevel;
-    }
-
     public int setDifficulty(int newDifficulty) {
+        // update math problem difficulty level.
         difficultyLevel = newDifficulty;
 
         return difficultyLevel;

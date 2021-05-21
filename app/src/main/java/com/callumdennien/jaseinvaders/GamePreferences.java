@@ -13,6 +13,7 @@ public class GamePreferences {
     private int current_answer;
 
     public GamePreferences() {
+        // initialise default values for all preferences.
         player_name = "Anonymous";
         difficulty = Difficulty.EASY;
         sound_effects = true;
@@ -41,7 +42,7 @@ public class GamePreferences {
     }
 
     public String getDifficulty() {
-        return difficulty.label;
+        return difficulty.difficultyText;
     }
 
     public void setDifficulty(Difficulty difficulty) {

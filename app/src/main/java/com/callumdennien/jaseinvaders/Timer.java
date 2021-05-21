@@ -26,8 +26,4 @@ public class Timer {
     public void set(int i) {
         seconds = i;
     }
-
-    public void reset() {
-        seconds = 0;
-    }
 }

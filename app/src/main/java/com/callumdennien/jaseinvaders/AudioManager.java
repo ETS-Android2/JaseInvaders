@@ -14,6 +14,7 @@ public class AudioManager implements SoundPool.OnLoadCompleteListener {
     private boolean online;
 
     AudioManager(Context context) {
+        // load all Sounds into sound pool, create hash map for sounds.
         soundIds = new HashMap<>();
         pool = new SoundPool(3, android.media.AudioManager.STREAM_MUSIC, 0);
         pool.setOnLoadCompleteListener(this);
@@ -25,6 +26,7 @@ public class AudioManager implements SoundPool.OnLoadCompleteListener {
 
     @Override
     public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+        // when sounds are loaded, add sounds to hash map.
         this.ready = status == 0;
 
         Sound sound = Sound.values()[loadId++];
@@ -40,6 +42,7 @@ public class AudioManager implements SoundPool.OnLoadCompleteListener {
     }
 
     void play(Sound sound) {
+        // while audio manager is online, play called sound.
         if (online) {
             Integer id = soundIds.get(sound);
             assert id != null;

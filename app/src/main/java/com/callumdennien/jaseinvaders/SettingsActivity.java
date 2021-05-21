@@ -31,14 +31,17 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // initialise customisable fields and game preferences.
         gamePreferences = GamePreferences.getInstance();
         nameText = findViewById(R.id.name_text);
         difficultyButton = findViewById(R.id.difficulty);
         soundButton = findViewById(R.id.sound);
         musicButton = findViewById(R.id.music);
 
+        // create a listener to update player name.
         nameText.addTextChangedListener(textWatcher);
 
+        // Add button to return to MainActivity.
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -46,6 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        // initialise all current settings stored in gamePreferences.
         super.onStart();
         difficultyButton.setText(gamePreferences.getDifficulty());
 
@@ -68,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        // cancel changes on back button press.
         Toast toast = Toast.makeText(this, "Cancelled Changes", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
@@ -76,6 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // return to MainActivity.
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
@@ -84,6 +90,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onDifficultyClicked(View view) {
+        // toggle game difficulty based on Difficulty enum, set text.
         switch (difficultyButton.getText().toString()) {
             case "EASY MODE":
                 gamePreferences.setDifficulty(Difficulty.MEDIUM);
@@ -101,6 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onSoundClicked(View view) {
+        // toggle sound button on/off, set text.
         switch (soundButton.getText().toString()) {
             case "Sound: on":
                 gamePreferences.setSoundEffects(false);
@@ -114,6 +122,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onMusicClicked(View view) {
+        // toggle music button on/off, set text.
         switch (musicButton.getText().toString()) {
             case "Music: on":
                 gamePreferences.setMusic(false);
@@ -127,7 +136,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onShareClicked(View view) throws TwitterException {
-
+        // check current tweet status isn't a duplicate, then tweet current score.
         Twitter twitter = TwitterFactory.getSingleton();
         Status currentStatus = twitter.getHomeTimeline().get(0);
         String latestUpdate = "I stopped an invasion in " + gamePreferences.getPersonalBest() + "Seconds. #JaseInvaders";
@@ -144,16 +153,17 @@ public class SettingsActivity extends AppCompatActivity {
     private final TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // before text changes
+            // detect before text changes.
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // during text changes
+            // detect during text changes.
         }
 
         @Override
         public void afterTextChanged(Editable s) {
+            // after player finishes typing, update player name.
             gamePreferences.setPlayerName(nameText.getText().toString());
         }
     };

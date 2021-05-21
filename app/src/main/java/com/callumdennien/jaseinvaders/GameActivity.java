@@ -50,6 +50,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        // initialise member variables.
         gamePreferences = GamePreferences.getInstance();
         mathProblems = new MathProblems();
         audioManager = new AudioManager(this);
@@ -62,16 +63,19 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         timerView = findViewById(R.id.timer_view);
         ufoView = findViewById(R.id.ufo_view);
 
+        // initialise sensor manager, setup accelerometer sensor with listener.
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+        // setup game screen
         gamePreferences.setCurrentScore(0);
         isRunning = false;
         enableTimer();
         drawUFO();
         setupGame();
 
+        // Add button to return to MainActivity.
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -79,6 +83,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onStart() {
+        // check preferences for music and sound, then play if toggled on.
         super.onStart();
         audioManager.toggle(gamePreferences.getSoundEffects());
         playMusic(gamePreferences.getMusic());
@@ -88,6 +93,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onPause() {
+        // stop listening for sensor data, save current timer score, stop music.
         super.onPause();
         sensorManager.unregisterListener(this);
         gamePreferences.setCurrentScore(timer.getScore());
@@ -99,6 +105,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onResume() {
+        // start listening for sensor data, apply saved timer score to current timer.
         super.onResume();
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         timer.set(gamePreferences.getCurrentScore());
@@ -106,6 +113,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        // detect shake of device.
         float x = event.values[0];
         float y = event.values[1];
         float z = event.values[2];
@@ -115,6 +123,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         float movement = accelerometer - gravityEarth;
         float phoneShake = 10f * 0.9f + movement;
 
+        // if the shake is large enough, generate new math problem.
         if (phoneShake > 20) {
             gamePreferences.setAnsweredQuestion(false);
             createMathProblem();
@@ -129,6 +138,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void setupGame() {
+        // set math problem difficulty level based on game difficulty.
         switch (gamePreferences.getDifficulty()) {
             case "EASY MODE":
                 mathProblems.setDifficulty(10);
@@ -141,10 +151,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 break;
         }
 
-        if (gamePreferences.getCurrentQuestion().equals("1 / 1 =")) {
-            createMathProblem();
-        }
-
+        // generate math problem, update question view and preferences.
         createMathProblem();
         displayAnswers();
         gamePreferences.setAnsweredQuestion(false);
@@ -152,6 +159,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void enableTimer() {
+        // create new handler runnable to increase timer score.
         timer = new Timer();
         handler = new Handler();
         isRunning = true;
@@ -169,10 +177,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void drawUFO() {
+        // use glide api to draw ufo to screen.
         Glide.with(this).load(R.drawable.ufo_boss).into(ufoView);
     }
 
     private void playMusic(boolean playing) {
+        // while music is toggled on, play game background music.
         if (playing) {
             mediaPlayer = MediaPlayer.create(this, R.raw.game_background);
             mediaPlayer.setLooping(true);
@@ -181,6 +191,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void createMathProblem() {
+        // generate random math problem, update question view and preferences.
         int randomNumber = random.nextInt(4) + 1;
 
         switch (randomNumber) {
@@ -224,69 +235,53 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void displayAnswers() {
+        // generate one correct answer and multiple incorrect answers.
         int optionCorrect = random.nextInt(4) + 1;
         ArrayList<String> optionsIncorrect = new ArrayList<>();
 
         for (int i = 1; i < 10; i++) {
             if (i % 2 == 0) {
                 optionsIncorrect.add(String.valueOf(gamePreferences.getCurrentAnswer() + i));
+
             } else {
                 optionsIncorrect.add(String.valueOf(gamePreferences.getCurrentAnswer() - i));
 
             }
         }
 
+        // randomise the order of the incorrect answers, assign them to the options
         Collections.shuffle(optionsIncorrect);
+        optionOneView.setText(optionsIncorrect.get(1));
+        optionTwoView.setText(optionsIncorrect.get(2));
+        optionThreeView.setText(optionsIncorrect.get(3));
+        optionFourView.setText(optionsIncorrect.get(4));
 
+        // assign correct answer to random option.
         switch (optionCorrect) {
             case 1:
                 optionOneView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
-                optionTwoView.setText(optionsIncorrect.get(2));
-                optionThreeView.setText(optionsIncorrect.get(3));
-                optionFourView.setText(optionsIncorrect.get(4));
                 break;
             case 2:
-                optionOneView.setText(optionsIncorrect.get(1));
                 optionTwoView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
-                optionThreeView.setText(optionsIncorrect.get(3));
-                optionFourView.setText(optionsIncorrect.get(4));
                 break;
             case 3:
-                optionOneView.setText(optionsIncorrect.get(1));
-                optionTwoView.setText(optionsIncorrect.get(2));
                 optionThreeView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
-                optionFourView.setText(optionsIncorrect.get(4));
                 break;
             case 4:
-                optionOneView.setText(optionsIncorrect.get(1));
-                optionTwoView.setText(optionsIncorrect.get(2));
-                optionThreeView.setText(optionsIncorrect.get(3));
                 optionFourView.setText(String.valueOf(gamePreferences.getCurrentAnswer()));
                 break;
         }
     }
 
-    public void onOptionOneClicked(View view) {
-        int guess = Integer.parseInt(optionOneView.getText().toString());
-        checkGuess(guess);
-    }
-
-    public void onOptionTwoClicked(View view) {
-        int guess = Integer.parseInt(optionTwoView.getText().toString());
-        checkGuess(guess);
-    }
-
-    public void onOptionThreeClicked(View view) {
-        int guess = Integer.parseInt(optionThreeView.getText().toString());
-        checkGuess(guess);
-    }
-
-    public void onOptionFourClicked(View view) {
-        int guess = Integer.parseInt(optionFourView.getText().toString());
+    public void onOptionClicked(View view) {
+        // guess option guess, check against answer.
+        TextView guessView = (TextView) view;
+        int guess = Integer.parseInt(guessView.getText().toString());
         checkGuess(guess);
     }
 
     private void checkGuess(int guess) {
+        // call differing method if guess is correct or incorrect.
         if (guess == gamePreferences.getCurrentAnswer() && gamePreferences.getAnsweredQuestion()) {
             correctGuess();
         } else {
@@ -297,6 +292,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private void correctGuess() {
         gamePreferences.setAnsweredQuestion(true);
 
+        // play game sounds, remove ufo health from progress bar.
         if (audioManager.isReady()) {
             if (progressBar.getProgress() > 10) {
                 audioManager.play(Sound.laser);
@@ -308,11 +304,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 audioManager.play(Sound.bomb);
                 progressBar.setProgress(progressBar.getProgress() - 10);
 
+                // on invader defeat, save score to database and update personal best.
                 gamePreferences.setPersonalBest(Math.max(timer.getScore(), gamePreferences.getPersonalBest()));
                 SQLiteOpenHelper database = new SQLiteOpenHelper(this);
                 database.insertScore(database.getWritableDatabase(), gamePreferences.getPlayerName(), timer.getScore());
                 database.close();
 
+                // return to MainActivity.
                 createToast("Beat Invasion In " + timer.toString());
                 finish();
             }
@@ -320,6 +318,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void incorrectGuess() {
+        // increase timer score if incorrect, play game sounds.
         timer.tick();
         timerView.setText(timer.toString());
 
@@ -329,6 +328,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void createToast(String message) {
+        // create toast using supplied message.
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();

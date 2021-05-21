@@ -5,9 +5,9 @@ public enum Difficulty {
     MEDIUM("MEDIUM MODE"),
     HARD("HARD MODE");
 
-    public final String label;
+    public final String difficultyText;
 
-    Difficulty(String label) {
-        this.label = label;
+    Difficulty(String difficultyText) {
+        this.difficultyText = difficultyText;
     }
 }
