@@ -3,7 +3,6 @@ package com.callumdennien.jaseinvaders;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -68,15 +67,6 @@ public class SettingsActivity extends AppCompatActivity {
         } else if (!(gamePreferences.getMusic())) {
             musicButton.setText(R.string.music_off);
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        // cancel changes on back button press.
-        Toast toast = Toast.makeText(this, "Cancelled Changes", Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-        super.onBackPressed();
     }
 
     @Override

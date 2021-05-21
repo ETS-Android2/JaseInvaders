@@ -106,55 +106,59 @@
 
             <TextView
                 android:id="@+id/option_one"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@color/dark_grey"
                 android:onClick="onOptionClicked"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:text="@string/math_answer"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/option_two"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@color/dark_grey"
                 android:onClick="onOptionClicked"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:text="@string/math_answer"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/option_three"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@color/dark_grey"
                 android:onClick="onOptionClicked"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:text="@string/math_answer"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/option_four"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@color/dark_grey"
                 android:onClick="onOptionClicked"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:text="@string/math_answer"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:textSize="25sp" />
 
         </LinearLayout>
 

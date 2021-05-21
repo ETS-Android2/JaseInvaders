@@ -29,8 +29,8 @@ public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {
     public void insertScore(SQLiteDatabase db, String valueName, int valueScore) {
         // Insert method value and score into scores database.
         ContentValues contentValues = new ContentValues();
-        contentValues.put("SCORE", valueName);
-        contentValues.put("NAME", valueScore);
+        contentValues.put("NAME", valueName);
+        contentValues.put("SCORE", valueScore);
         db.insert("SCORES", null, contentValues);
         db.close();
     }
@@ -38,13 +38,13 @@ public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {
     public HashMap<String, Integer> queryScores() {
         // Get readable database and grab all scores through a cursor.
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT NAME, SCORE FROM SCORES ORDER BY SCORE", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM SCORES ORDER BY SCORE", null);
 
         HashMap<String, Integer> scores = new HashMap<>();
 
         if (cursor.moveToFirst()) {
             do {
-                scores.put(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
+                scores.put(cursor.getString(1), cursor.getInt(2));
             } while (cursor.moveToNext());
         }
 
