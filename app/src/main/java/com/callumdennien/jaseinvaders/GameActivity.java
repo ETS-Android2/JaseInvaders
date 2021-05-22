@@ -123,10 +123,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         float phoneShake = 10f * 0.9f + movement;
 
         // if the shake is large enough, generate new math problem.
+        // change to "phoneShake > 10" if using emulator instead of physical device.
         if (phoneShake > 20) {
             gamePreferences.setAnsweredQuestion(false);
             createMathProblem();
             displayAnswers();
+            changeButtonState(true);
             questionView.setText(gamePreferences.getCurrentQuestion());
         }
     }
@@ -277,6 +279,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private void correctGuess() {
         gamePreferences.setAnsweredQuestion(true);
+        changeButtonState(false);
 
         // play game sounds, remove ufo health from progress bar.
         if (audioManager.isReady()) {
@@ -301,6 +304,27 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 finish();
             }
         }
+    }
+
+    private void changeButtonState(boolean clickable) {
+        // toggle text colour and button state.
+        int textColour = getResources().getColor(R.color.white);
+
+        if (!clickable) {
+            textColour = getResources().getColor(R.color.light_grey);
+        }
+
+        optionOneView.setClickable(clickable);
+        optionOneView.setTextColor(textColour);
+
+        optionTwoView.setClickable(clickable);
+        optionTwoView.setTextColor(textColour);
+
+        optionThreeView.setClickable(clickable);
+        optionThreeView.setTextColor(textColour);
+
+        optionFourView.setClickable(clickable);
+        optionFourView.setTextColor(textColour);
     }
 
     private void incorrectGuess() {
