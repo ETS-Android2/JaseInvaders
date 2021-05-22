@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 public class JaseInvadersTest {
     MathProblems mathProblems = new MathProblems();
+    GamePreferences gamePreferences = GamePreferences.getInstance();
 
     @Test
     public void generate_addition() {
@@ -52,7 +53,7 @@ public class JaseInvadersTest {
 
     @Test
     public void get_difficulty() {
-        int difficulty = mathProblems.getDifficulty();
+        int difficulty = gamePreferences.getDifficulty().difficultyValue;
 
         assertEquals(difficulty, 10);
     }
@@ -68,8 +69,8 @@ public class JaseInvadersTest {
     @Test
     public void reset_timer() {
         Timer timer = new Timer();
-        timer.add(1);
-        timer.reset();
+        timer.tick();
+        timer.set(0);
 
         assertEquals("0 Seconds", timer.toString());
     }
