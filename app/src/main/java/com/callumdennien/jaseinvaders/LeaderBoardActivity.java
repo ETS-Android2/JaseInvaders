@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class LeaderBoardActivity extends AppCompatActivity {
     private SQLiteOpenHelper database;
@@ -36,7 +37,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     private void getLeaderBoard() {
         // query database for scores, append scores to list adapter.
-        HashMap<String, Integer> scores = database.queryScores();
+        TreeMap<String, Integer> scores = database.queryScores();
 
         for (Map.Entry<String, Integer> entry : scores.entrySet()) {
             addScore(entry.getKey(), entry.getValue());

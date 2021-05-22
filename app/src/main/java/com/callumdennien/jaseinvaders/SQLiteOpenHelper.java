@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {
     private static final String DB_NAME = "jaseScores";
@@ -35,16 +36,19 @@ public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.close();
     }
 
-    public HashMap<String, Integer> queryScores() {
+    public TreeMap<String, Integer> queryScores() {
         // Get readable database and grab all scores through a cursor.
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM SCORES ORDER BY SCORE", null);
 
-        HashMap<String, Integer> scores = new HashMap<>();
+        TreeMap<String, Integer> scores = new TreeMap<>();
 
         if (cursor.moveToFirst()) {
+            int count = 0;
+
             do {
-                scores.put(cursor.getString(1), cursor.getInt(2));
+                count++;
+                scores.put(count + ") " + cursor.getString(1), cursor.getInt(2));
             } while (cursor.moveToNext());
         }
 
