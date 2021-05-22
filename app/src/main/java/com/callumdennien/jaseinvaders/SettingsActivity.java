@@ -3,6 +3,7 @@ package com.callumdennien.jaseinvaders;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -129,14 +130,19 @@ public class SettingsActivity extends AppCompatActivity {
         // check current tweet status isn't a duplicate, then tweet current score.
         Twitter twitter = TwitterFactory.getSingleton();
         Status currentStatus = twitter.getHomeTimeline().get(0);
-        String latestUpdate = "I stopped an invasion in " + gamePreferences.getPersonalBest() + "Seconds. #JaseInvaders";
+        String latestUpdate = "I stopped an invasion in " + gamePreferences.getPersonalBest() + " Seconds. #JaseInvaders";
 
         if (!currentStatus.getText().equals(latestUpdate)) {
-            twitter.updateStatus(latestUpdate);
-            Toast.makeText(this, "Sharing Personal Score", Toast.LENGTH_SHORT).show();
+            if (gamePreferences.getPersonalBest() == 999) {
+                createToast("No Score Available");
+
+            } else {
+                twitter.updateStatus(latestUpdate);
+                createToast("Sharing Personal Best");
+            }
 
         } else {
-            Toast.makeText(this, "Recent Duplicate Tweet", Toast.LENGTH_SHORT).show();
+            createToast("Duplicate Tweet Detected");
         }
     }
 
@@ -157,4 +163,11 @@ public class SettingsActivity extends AppCompatActivity {
             gamePreferences.setPlayerName(nameText.getText().toString());
         }
     };
+
+    private void createToast(String message) {
+        // create toast using supplied message.
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
 }
