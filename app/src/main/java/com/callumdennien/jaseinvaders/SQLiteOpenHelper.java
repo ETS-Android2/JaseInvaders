@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.HashMap;
 import java.util.TreeMap;
 
 public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {

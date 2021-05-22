@@ -7,7 +7,6 @@ import android.widget.ListView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 

@@ -22,7 +22,7 @@ public class Timer {
     public int getScore() {
         return seconds;
     }
-    
+
     public void set(int i) {
         seconds = i;
     }
