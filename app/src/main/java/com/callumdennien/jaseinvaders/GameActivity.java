@@ -294,7 +294,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 progressBar.setProgress(progressBar.getProgress() - 10);
 
                 // on invader defeat, save score to database and update personal best.
-                gamePreferences.setPersonalBest(Math.max(timer.getScore(), gamePreferences.getPersonalBest()));
+                gamePreferences.setPersonalBest(Math.min(timer.getScore(), gamePreferences.getPersonalBest()));
                 SQLiteOpenHelper database = new SQLiteOpenHelper(this);
                 database.insertScore(database.getWritableDatabase(), gamePreferences.getPlayerName(), timer.getScore());
                 database.close();
